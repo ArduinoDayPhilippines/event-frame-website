@@ -1,3 +1,5 @@
+import YellowButton from './YellowButton';
+
 export default function Header() {
   const headerBgColor = '#4A90E2';
 
@@ -18,16 +20,13 @@ export default function Header() {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex space-x-6 text-sm font-medium">
-          <a href="#" className="text-white hover:text-gray-200 transition-colors">About Us</a> 
-          <a href="#" className="text-white hover:text-gray-200 transition-colors">Features</a> 
+        <nav className="flex space-x-6 items-center">
+          <a href="#" className="text-white hover:text-gray-200 transition-colors text-base font-medium">About Us</a> 
+          <a href="#" className="text-white hover:text-gray-200 transition-colors text-base font-medium">Features</a> 
           {/* Highlighted CTA button (Home) */}
-          <a 
-            href="#" 
-            className="px-3 py-1 rounded-[2rem] bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-500 transition-colors shadow-md"
-          >
+          <YellowButton size="md" fullRounded={true}>
             Home
-          </a>
+          </YellowButton>
         </nav>
       </div>
     </header>

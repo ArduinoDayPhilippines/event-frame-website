@@ -6,23 +6,31 @@ interface YellowButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   className?: string;
+  size?: "sm" | "md" | "lg";
+  fullRounded?: boolean;
 }
 
 export default function YellowButton({ 
   children, 
   onClick, 
   type = "button",
-  className = ""
+  className = "",
+  size = "md",
+  fullRounded = true
 }: YellowButtonProps) {
+  const sizeClasses = {
+    sm: "px-4 py-1.5 text-sm",
+    md: "px-6 py-2 text-base",
+    lg: "px-10 py-3 text-lg"
+  };
+
+  const roundedClass = fullRounded ? "rounded-full" : "rounded-[2rem]";
+
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`px-6 py-2 rounded-full text-sm font-bold transition hover:opacity-90 shadow-md ${className}`}
-      style={{ 
-        backgroundColor: '#FFC107', 
-        color: 'black' 
-      }}
+      className={`${sizeClasses[size]} ${roundedClass} font-bold bg-yellow-400 text-gray-900 hover:bg-yellow-500 transition-colors shadow-md ${className}`}
     >
       {children}
     </button>

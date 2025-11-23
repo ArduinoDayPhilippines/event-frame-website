@@ -4,7 +4,7 @@
 // Use this Header import from the LandingPage directory
 // import Header from '../LandingPage/LandingHeader'
 
-import BottomLabel from '../../components/BottomLabel';
+import Footer from '@/app/components/Footer';
 import { UploadCardModel } from '../../components/UploadCardModel';
 import React, { useState, useCallback } from 'react';
 
@@ -41,7 +41,7 @@ export default function App() {
             </main>
 
             {/* 3. Bottom Label / Footer */}
-            <BottomLabel />
+            <Footer />
         </div>
     );
 }

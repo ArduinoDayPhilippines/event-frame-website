@@ -1,6 +1,7 @@
-"user client";
+"use client";
 
 import CloudUploadIcon from './CloudUpload';
+import YellowButton from './YellowButton';
 import React, { useState, useCallback } from 'react';
 // ===============================================================================================
 
@@ -106,7 +107,7 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
                 onDrop={handleDrop}
             >
                 {/* Cloud Icon */}
-                <CloudUploadIcon className={`w-20 h-20 mb-6 ${isDragging || fileName ? 'text-teal-500' : 'text-teal-400'}`} />
+                <CloudUploadIcon className={`w-32 h-32 mb-6 ${isDragging || fileName ? 'text-teal-500' : 'text-teal-400'}`} />
                 
                 <p className="text-3xl font-bold text-gray-700 mb-2">
                     {fileName ? `File Selected: ${fileName}` : 'Drag or Drop your Frame here'}
@@ -127,14 +128,13 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
 
             {/* Visible Browse Button */}
             <div className="text-center mt-8">
-                <button
+                <YellowButton 
+                    size="lg" 
+                    fullRounded={true}
                     onClick={() => document.getElementById('file-upload')?.click()}
-                    className="py-3 px-10 text-lg font-bold text-white rounded-full 
-                               bg-yellow-500 shadow-md hover:bg-yellow-600 transition-colors 
-                               shadow-yellow-500/50"
                 >
                     Browse
-                </button>
+                </YellowButton>
             </div>
         </div>
     );

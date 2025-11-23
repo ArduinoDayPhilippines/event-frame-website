@@ -1,16 +1,18 @@
-import Header from '@/app/sections/LandingPage/LandingHeader';
-import Footer from '@/app/sections/LandingPage/LandingFooter';
+import Header from '@/app/components/Header';
+import LandingFooter from '@/app/sections/LandingPage/LandingFooter';
 
-export default function Home() {
+export default function AboutUs() {
   const primaryBlue = '#4A90E2'; 
   const accentGreen = '#50E3C2';
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Header */}
       <Header />
-      <div className="flex items-center justify-center min-h-[500px] py-16 bg-white overflow-hidden md:py-24">
-      
-      <div className="max-w-7xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-center md:justify-between gap-x-8">
+
+      {/* Main Content */}
+      <main className="flex-grow flex items-center justify-center py-16 overflow-hidden md:py-24">
+        <div className="max-w-7xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-center md:justify-between gap-x-8">
         
         {/* =================================
             Left Side: The Overlapping Shapes 
@@ -53,9 +55,11 @@ export default function Home() {
             just one frame.
           </h2>
         </div>
-      </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <LandingFooter />
     </div>
-    <Footer />
-    </>
   );
 }
