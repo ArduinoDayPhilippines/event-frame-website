@@ -1,6 +1,8 @@
 import Header from '@/app/components/Header';
 import LandingFooter from '@/app/sections/LandingPage/LandingFooter';
 import YellowButton from '@/app/components/YellowButton';
+import FeatureCard from '@/app/components/FeatureCard';
+import { Wand2, Zap, Share2 } from 'lucide-react';
 
 export default function LandingPage() {
   const primaryBlue = '#4A90E2'; 
@@ -8,17 +10,15 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Header */}
+
       <Header />
 
-      {/* Hero Section */}
       <section 
         className="relative min-h-[600px] flex items-center justify-center overflow-hidden"
         style={{
           background: 'linear-gradient(to bottom, #4A90E2 0%, #8CB8E8 50%, rgba(255, 255, 255, 1) 100%)',
         }}
       >
-        {/* Halftone pattern overlay - denser at top right, sparse at bottom */}
         <div 
           className="absolute inset-0"
           style={{
@@ -33,7 +33,6 @@ export default function LandingPage() {
           }}
         />
         
-        {/* Hero Content */}
         <div className="relative z-10 text-center px-6 py-20">
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-black mb-6 leading-tight">
             Make it stand out.
@@ -48,7 +47,6 @@ export default function LandingPage() {
           </YellowButton>
         </div>
 
-        {/* Gradient fade to white at bottom */}
         <div 
           className="absolute bottom-0 left-0 right-0 h-32"
           style={{
@@ -57,14 +55,12 @@ export default function LandingPage() {
         />
       </section>
 
-      {/* About Section */}
       <section className="py-16 md:py-24 bg-white overflow-hidden">
         <div className="max-w-5xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-x-8">
         
-        {/* Overlapping Shapes */}
+
         <div className="relative w-full max-w-sm h-64 md:h-80 mb-10 md:mb-0 md:flex-shrink-0 flex items-center">
-          
-          {/* Green Square */}
+
           <div 
             style={{ 
               backgroundColor: accentGreen,
@@ -73,7 +69,7 @@ export default function LandingPage() {
             className="absolute w-64 h-64 shadow-xl opacity-90"
           />
           
-          {/* Blue Square */}
+
           <div 
             style={{ 
               backgroundColor: primaryBlue,
@@ -83,7 +79,7 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Headline Text */}
+
         <div className="text-center md:text-left md:max-w-md flex-shrink-0"> 
           <h2 
             className="text-3xl sm:text-4xl font-extrabold text-gray-900 italic leading-tight" 
@@ -100,7 +96,44 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+
+          <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-black">
+            Why <span style={{ color: primaryBlue }}>FrameIt</span> is Your Picture <span style={{ color: accentGreen }}>Essential</span>.
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            
+            <FeatureCard
+              title="Design Your Posts"
+              description="Pick from a collection of stylish, ready-made frames to enhance your photos. No need to fuss with designs, your photos get a polished look instantly"
+              icon={Wand2}
+              borderColor={primaryBlue}
+              iconColor={primaryBlue}
+            />
+
+            <FeatureCard
+              title="Effortless"
+              description="FrameIt makes it super easy to turn any photo into something unique. Just select a frame, write a caption, upload your picture, and you're done."
+              icon={Zap}
+              borderColor={accentGreen}
+              iconColor={accentGreen}
+            />
+
+            <FeatureCard
+              title="Share Your Work"
+              description="Show your framed photos with friends, family or online. The ready-made frames makes sharing your memories quick, fun, and eye-catching."
+              icon={Share2}
+              borderColor={primaryBlue}
+              iconColor={accentGreen}
+            />
+
+          </div>
+        </div>
+      </section>
+
       <LandingFooter />
     </div>
   );
