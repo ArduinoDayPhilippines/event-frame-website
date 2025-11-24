@@ -6,16 +6,24 @@
 
 import Footer from '@/app/components/Footer';
 import { UploadCardModel } from '../../components/UploadCardModel';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { useFrame } from '@/app/contexts/FrameContext';
+import { useRouter } from 'next/navigation';
 
 
 export default function App() {
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const { imageFile, setImageFile } = useFrame();
+    const router = useRouter();
 
     const handleFileDrop = useCallback((file: File) => {
         console.log("File received:", file.name);
-        setUploadedFile(file);
-    }, []);
+        setImageFile(file);
+        
+        // Navigate to edit page after successful upload
+        setTimeout(() => {
+            router.push('/sections/EditImagePage');
+        }, 500);
+    }, [setImageFile, router]);
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 font-sans">
@@ -27,16 +35,16 @@ export default function App() {
             <main className="flex-grow flex flex-col items-center justify-center p-4">
                 
                 {/* Status Message */}
-                {uploadedFile && (
+                {imageFile && (
                     <div className="mb-8 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg max-w-xl w-full text-center font-medium shadow-md">
-                        Successfully selected: **{uploadedFile.name}** ({Math.round(uploadedFile.size / 1024)} KB). Ready for processing.
+                        Successfully selected: **{imageFile.name}** ({Math.round(imageFile.size / 1024)} KB). Redirecting to editor...
                     </div>
                 )}
 
                 {/* 2. Upload Card (Exportable) */}
                 <UploadCardModel 
                     onFileDrop={handleFileDrop}
-                    uploadedFile={uploadedFile}
+                    uploadedFile={imageFile}
                 />
             </main>
 

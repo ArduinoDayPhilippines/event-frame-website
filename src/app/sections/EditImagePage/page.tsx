@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useFrame } from '@/app/contexts/FrameContext';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import FramePreview from '@/app/components/FramePreview';
@@ -8,26 +10,43 @@ import ControlPanel from '@/app/components/ControlPanel';
 import YellowButton from '@/app/components/YellowButton';
 
 export default function EditImagePage() {
-  const [scale, setScale] = useState(100);
-  const [rotate, setRotate] = useState(0);
-  const [caption, setCaption] = useState('');
-  const [imageUrl, setImageUrl] = useState<string>(''); // Will be populated from upload
+  const router = useRouter();
+  const { 
+    imageUrl, 
+    scale, 
+    rotate, 
+    caption, 
+    frameColor,
+    setScale, 
+    setRotate, 
+    setCaption 
+  } = useFrame();
   
-  const primaryBlue = '#4A90E2';
+  // Redirect to upload page if no image is loaded
+  useEffect(() => {
+    if (!imageUrl) {
+      router.push('/sections/UploadImagePage');
+    }
+  }, [imageUrl, router]);
+  
+  const primaryBlue = frameColor || '#4A90E2';
 
   const handleSave = () => {
-    // TODO: Implement save functionality
-    console.log('Saving frame with:', { scale, rotate, caption });
+    // TODO: Implement save functionality with API
+    console.log('Saving frame with:', { imageUrl, scale, rotate, caption, frameColor });
+    // Future: Save to database and get frameId
   };
 
   const handleShare = () => {
     // TODO: Implement share functionality
     console.log('Sharing frame with caption:', caption);
+    // Future: Generate shareable link
   };
 
   const handleChangeFrame = () => {
     // TODO: Implement frame selection
     console.log('Opening frame selector');
+    // Future: Open modal to select different frame styles
   };
 
   return (
