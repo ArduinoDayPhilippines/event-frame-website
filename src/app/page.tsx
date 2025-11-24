@@ -53,13 +53,13 @@ export default function LandingPage() {
             background: 'linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.8) 50%, white 100%)'
           }}
         />
-      </section>
+      </section>a
 
       <section className="py-16 md:py-24 bg-white overflow-hidden">
         <div className="max-w-5xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-x-8">
         
 
-        <div className="relative w-full max-w-sm h-64 md:h-80 mb-10 md:mb-0 md:flex-shrink-0 flex items-center">
+        <div className="relative w-full max-w-sm h-64 md:h-80 mb-10 md:mb-0 md:shrink-0 flex items-center">
 
           <div 
             style={{ 
@@ -80,7 +80,7 @@ export default function LandingPage() {
         </div>
 
 
-        <div className="text-center md:text-left md:max-w-md flex-shrink-0"> 
+        <div className="text-center md:text-left md:max-w-md shrink-0"> 
           <h2 
             className="text-3xl sm:text-4xl font-extrabold text-gray-900 italic leading-tight" 
             style={{ textShadow: '4px 4px 8px rgba(0,0,0,0.4)' }} 
