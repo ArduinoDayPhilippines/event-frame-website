@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from 'react';
 import { useFrame } from '@/app/contexts/FrameContext';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
@@ -19,8 +20,10 @@ export default function UserPage() {
     setScale,
     setRotate,
     setCaption,
+    setImageFile,
   } = useFrame();
   
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const primaryBlue = frameColor || '#4A90E2';
 
   const handleDownload = () => {
@@ -28,7 +31,14 @@ export default function UserPage() {
   };
 
   const handleAddPhoto = () => {
-    console.log('Opening photo upload');
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+    }
   };
 
   return (
@@ -109,6 +119,15 @@ export default function UserPage() {
       <CarouselSection />
 
       <Footer />
+      
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/jpg"
+        onChange={handleFileChange}
+        className="hidden"
+      />
     </div>
   );
 }
