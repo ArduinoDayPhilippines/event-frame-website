@@ -17,10 +17,10 @@ export default function FramePreview({
     <div className="flex flex-col items-center">
       {/* Frame Container */}
       <div 
-        className="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] shadow-2xl"
+        className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] shadow-2xl"
         style={{
           backgroundColor: frameColor,
-          padding: '20px'
+          padding: '24px'
         }}
       >
         {/* Inner white area where image/placeholder goes */}

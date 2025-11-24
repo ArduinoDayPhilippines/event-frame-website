@@ -64,7 +64,7 @@ export default function ControlPanel({
       </div>
 
       {/* Caption Input */}
-      <div className="mb-4">
+      <div className="mb-4 bg-white rounded-lg p-1">
         <TextArea
           value={caption}
           onChange={onCaptionChange}
