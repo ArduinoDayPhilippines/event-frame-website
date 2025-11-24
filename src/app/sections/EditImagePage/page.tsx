@@ -10,6 +10,7 @@ import ControlPanel from '@/app/components/ControlPanel';
 import YellowButton from '@/app/components/YellowButton';
 import ShareModal from '@/app/components/ShareModal';
 import { saveFrame, fileToBase64 } from '@/app/utils/frameStorage';
+import { downloadFrame } from '@/app/utils/downloadFrame';
 
 export default function EditImagePage() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function EditImagePage() {
   
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
+  const [isDownloading, setIsDownloading] = useState(false);
   
   // Redirect to upload page if no image is loaded
   useEffect(() => {
@@ -38,10 +40,25 @@ export default function EditImagePage() {
   
   const primaryBlue = frameColor || '#4A90E2';
 
-  const handleSave = () => {
-    // TODO: Implement save functionality with API
-    console.log('Saving frame with:', { imageUrl, scale, rotate, caption, frameColor });
-    // Future: Save to database and get frameId
+  const handleSave = async () => {
+    setIsDownloading(true);
+    try {
+      const success = await downloadFrame('frame-preview', {
+        filename: `frameit-${Date.now()}`,
+        format: 'png'
+      });
+      
+      if (success) {
+        console.log('Frame downloaded successfully');
+      } else {
+        alert('Failed to download frame. Please try again.');
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      alert('Failed to download frame. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleShare = async () => {
@@ -54,11 +71,23 @@ export default function EditImagePage() {
       setFrameId(currentFrameId);
     }
     
+    console.log('Sharing frame with ID:', currentFrameId);
+    
     // Save frame to localStorage
     try {
+      // Convert blob URL to base64 for persistent storage
+      let imageData = imageUrl;
+      if (imageUrl.startsWith('blob:')) {
+        console.log('Converting blob URL to base64...');
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        imageData = await fileToBase64(blob as File);
+        console.log('Conversion complete, base64 length:', imageData.length);
+      }
+      
       const frameData = {
         frameId: currentFrameId,
-        imageUrl: imageUrl,
+        imageUrl: imageData, // Save base64 instead of blob URL
         scale,
         rotate,
         caption,
@@ -66,7 +95,13 @@ export default function EditImagePage() {
         createdAt: new Date().toISOString(),
       };
       
-      saveFrame(frameData);
+      console.log('Saving frame data:', { ...frameData, imageUrl: `${imageData.substring(0, 50)}...` });
+      const saved = saveFrame(frameData);
+      console.log('Frame saved:', saved);
+      
+      // Verify it was saved
+      const retrieved = JSON.parse(localStorage.getItem('frameit_frames') || '{}');
+      console.log('Stored frames:', Object.keys(retrieved));
       
       // Generate shareable URL
       const baseUrl = window.location.origin;
@@ -126,6 +161,7 @@ export default function EditImagePage() {
                   onSave={handleSave}
                   onShare={handleShare}
                   backgroundColor={primaryBlue}
+                  isDownloading={isDownloading}
                 />
               </div>
             </div>

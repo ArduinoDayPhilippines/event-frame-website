@@ -14,6 +14,7 @@ interface ControlPanelProps {
   onSave: () => void;
   onShare: () => void;
   backgroundColor?: string;
+  isDownloading?: boolean;
 }
 
 export default function ControlPanel({
@@ -25,7 +26,8 @@ export default function ControlPanel({
   onCaptionChange,
   onSave,
   onShare,
-  backgroundColor = '#4A90E2'
+  backgroundColor = '#4A90E2',
+  isDownloading = false
 }: ControlPanelProps) {
   return (
     <div 
@@ -52,14 +54,14 @@ export default function ControlPanel({
         step={1}
       />
 
-      {/* Save Button */}
+      {/* Save/Download Button */}
       <div className="mb-4">
         <YellowButton 
           size="md" 
-          className="w-full"
+          className={`w-full ${isDownloading ? 'opacity-50 cursor-wait' : ''}`}
           onClick={onSave}
         >
-          Save
+          {isDownloading ? 'Downloading...' : 'Download'}
         </YellowButton>
       </div>
 

@@ -15,8 +15,9 @@ export default function FramePreview({
 }: FramePreviewProps) {
   return (
     <div className="flex flex-col items-center">
-      {/* Frame Container */}
+      {/* Frame Container with ID for downloading */}
       <div 
+        id="frame-preview"
         className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] shadow-2xl"
         style={{
           backgroundColor: frameColor,

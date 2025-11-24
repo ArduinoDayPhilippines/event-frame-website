@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
@@ -8,16 +8,26 @@ import FramePreview from '@/app/components/FramePreview';
 import Slider from '@/app/components/Slider';
 import TextArea from '@/app/components/TextArea';
 import YellowButton from '@/app/components/YellowButton';
+import CarouselSection from '@/app/components/CarouselSection';
 import { getFrame, SavedFrame } from '@/app/utils/frameStorage';
+import { downloadFrame } from '@/app/utils/downloadFrame';
 
 export default function SharedFramePage() {
   const params = useParams();
   const router = useRouter();
   const frameId = params.frameId as string;
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [frame, setFrame] = useState<SavedFrame | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  
+  // User's customization (separate from template)
+  const [userImage, setUserImage] = useState<string>('');
+  const [userScale, setUserScale] = useState(100);
+  const [userRotate, setUserRotate] = useState(0);
+  const [userCaption, setUserCaption] = useState('');
 
   // Load frame data on mount
   useEffect(() => {
@@ -32,6 +42,8 @@ export default function SharedFramePage() {
     
     if (savedFrame) {
       setFrame(savedFrame);
+      // Pre-populate with template's caption
+      setUserCaption(savedFrame.caption);
     } else {
       setNotFound(true);
     }
@@ -39,9 +51,35 @@ export default function SharedFramePage() {
     setLoading(false);
   }, [frameId]);
 
-  const handleDownload = () => {
-    // TODO: Implement download functionality
-    console.log('Downloading frame:', frameId);
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      const success = await downloadFrame('frame-preview', {
+        filename: `frameit-${frameId}`,
+        format: 'png'
+      });
+      
+      if (!success) {
+        alert('Failed to download frame. Please try again.');
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      alert('Failed to download frame. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  const handleAddPhoto = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setUserImage(url);
+    }
   };
 
   const handleCreateYourOwn = () => {
@@ -90,88 +128,107 @@ export default function SharedFramePage() {
           {/* Shared Frame Banner */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Shared Frame
+              Customize This Frame
             </h1>
             <p className="text-gray-600">
-              Created on {new Date(frame.createdAt).toLocaleDateString()}
+              Upload your photo and customize the frame template
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
-            {/* Left: Frame Preview */}
+            {/* Left: Twibbonize-style Layered Frame */}
             <div className="flex flex-col items-center gap-6">
-              <FramePreview
-                imageUrl={frame.imageUrl}
-                scale={frame.scale}
-                rotate={frame.rotate}
-                frameColor={frame.frameColor}
-              />
-              
-              <div className="flex gap-4">
-                <YellowButton 
-                  size="lg"
-                  onClick={handleDownload}
-                >
-                  Download Frame
-                </YellowButton>
+              <div className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] shadow-2xl">
+                {/* Layer 1: Background - User's photo */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 overflow-hidden">
+                  {userImage ? (
+                    <img 
+                      src={userImage}
+                      alt="Your photo"
+                      className="w-full h-full object-cover"
+                      style={{
+                        transform: `scale(${userScale / 100}) rotate(${userRotate}deg)`,
+                        transition: 'transform 0.2s ease'
+                      }}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-full bg-white">
+                      <span className="text-4xl font-bold text-gray-400">Upload Photo</span>
+                    </div>
+                  )}
+                </div>
                 
-                <YellowButton 
-                  size="lg"
-                  onClick={handleCreateYourOwn}
-                >
-                  Create Your Own
-                </YellowButton>
+                {/* Layer 2: Foreground - Frame overlay (always visible) */}
+                <div className="absolute inset-0 pointer-events-none z-10">
+                  <img 
+                    src={frame.imageUrl}
+                    alt="Frame overlay"
+                    className="w-full h-full object-contain"
+                    style={{
+                      pointerEvents: 'none'
+                    }}
+                  />
+                </div>
               </div>
+              
+              <YellowButton 
+                size="lg"
+                onClick={handleAddPhoto}
+              >
+                + Add Your Photo
+              </YellowButton>
             </div>
 
-            {/* Right: Frame Info (Read-only) */}
+            {/* Right: Customization Controls */}
             <div className="flex items-center justify-center lg:justify-start">
               <div className="w-full max-w-md">
                 <div 
                   className="rounded-3xl shadow-2xl p-8 flex flex-col"
                   style={{ backgroundColor: frame.frameColor }}
                 >
-                  <h2 className="text-2xl font-bold text-white mb-6">Frame Details</h2>
+                  <h2 className="text-2xl font-bold text-black mb-6">Customize Frame</h2>
+
+                  <Slider
+                    label="Scale"
+                    value={userScale}
+                    onChange={setUserScale}
+                    min={50}
+                    max={150}
+                    step={1}
+                  />
+
+                  <Slider
+                    label="Rotate"
+                    value={userRotate}
+                    onChange={setUserRotate}
+                    min={0}
+                    max={360}
+                    step={1}
+                  />
 
                   <div className="mb-4">
-                    <label className="block text-white text-sm font-medium mb-2">
-                      Scale: {frame.scale}%
-                    </label>
-                    <div className="h-2 bg-white bg-opacity-30 rounded-full">
-                      <div 
-                        className="h-full bg-white rounded-full"
-                        style={{ width: `${((frame.scale - 50) / 100) * 100}%` }}
-                      />
-                    </div>
+                    <YellowButton 
+                      size="md" 
+                      className={`w-full ${isDownloading ? 'opacity-50 cursor-wait' : ''}`}
+                      onClick={handleDownload}
+                    >
+                      {isDownloading ? 'Downloading...' : 'Download Frame'}
+                    </YellowButton>
                   </div>
 
-                  <div className="mb-4">
-                    <label className="block text-white text-sm font-medium mb-2">
-                      Rotate: {frame.rotate}°
-                    </label>
-                    <div className="h-2 bg-white bg-opacity-30 rounded-full">
-                      <div 
-                        className="h-full bg-white rounded-full"
-                        style={{ width: `${(frame.rotate / 360) * 100}%` }}
-                      />
-                    </div>
+                  <div className="mb-4 bg-white rounded-lg p-1">
+                    <TextArea
+                      value={userCaption}
+                      onChange={setUserCaption}
+                      placeholder="Edit caption..."
+                      rows={4}
+                    />
                   </div>
-
-                  {frame.caption && (
-                    <div className="mb-4 bg-white rounded-lg p-4">
-                      <label className="block text-gray-700 text-sm font-medium mb-2">
-                        Caption
-                      </label>
-                      <p className="text-gray-900 whitespace-pre-wrap">
-                        {frame.caption}
-                      </p>
-                    </div>
-                  )}
 
                   <div className="mt-4 p-4 bg-white bg-opacity-20 rounded-lg">
-                    <p className="text-white text-sm text-center">
-                      This is a shared frame. Create your own to customize!
+                    <p className="text-black text-sm text-center font-medium">
+                      Template by: Original Creator
                     </p>
                   </div>
                 </div>
@@ -182,7 +239,18 @@ export default function SharedFramePage() {
         </div>
       </main>
 
+      <CarouselSection />
+
       <Footer />
+      
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/jpg"
+        onChange={handleFileChange}
+        className="hidden"
+      />
     </div>
   );
 }

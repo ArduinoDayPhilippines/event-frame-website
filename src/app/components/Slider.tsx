@@ -19,8 +19,8 @@ export default function Slider({
 }: SliderProps) {
   return (
     <div className="mb-4">
-      <label className="block text-white text-sm font-semibold mb-2">
-        {label}
+      <label className="block text-black text-sm font-semibold mb-2">
+        {label}: {value}{label === 'Rotate' ? '°' : '%'}
       </label>
       <input
         type="range"
