@@ -53,13 +53,13 @@ export default function SignupPage() {
         }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 scale-90">
         <Card>
-        <h1 className="text-4xl font-semibold mb-8 text-white">
+        <h1 className="text-4xl font-semibold mb-6 text-white">
           Create an account
         </h1>
         
-        <div className="w-full space-y-8 mb-6"> 
+        <div className="w-full space-y-4 mb-6"> 
           <Input id="email" label="Email" type="text" />
           <Input id="username" label="Username" type="text" />
           <Input id="password" label="Password" type="password" />
@@ -70,7 +70,7 @@ export default function SignupPage() {
           Sign Up
         </YellowButton>
 
-        <p className="mt-6 text-sm text-white">
+        <p className="mt-4 text-sm text-white">
           Already have an account? <a href="/login" className="underline font-medium hover:text-gray-200 cursor-pointer">Sign in</a>
         </p>
       </Card>

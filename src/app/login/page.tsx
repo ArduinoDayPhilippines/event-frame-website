@@ -55,11 +55,11 @@ export default function LoginPage() {
 
       <div className="relative z-10">
         <Card>
-        <h1 className="text-4xl font-semibold mb-8 text-white">
+        <h1 className="text-5xl font-semibold mb-10 text-white">
           Login
         </h1>
         
-        <div className="w-full space-y-8 mb-10"> 
+        <div className="w-full space-y-6 mb-12"> 
           <Input id="username" label="Username" type="text" />
           <Input id="password" label="Password" type="password" />
         </div>
