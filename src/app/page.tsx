@@ -81,7 +81,7 @@ export default function LandingPage() {
           }}
         />
         
-        <div className="relative z-10 text-center px-6 py-20">
+        <div className="relative z-10 text-center px-6 -mt-20">
           {/* Decorative element above title */}
           <div className="flex items-center justify-center gap-2 mb-6">
             <div 
