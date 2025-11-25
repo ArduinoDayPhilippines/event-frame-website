@@ -93,8 +93,13 @@ export default function EditImagePage() {
       };
       
       console.log('Saving frame data:', { ...frameData, imageUrl: `${imageData.substring(0, 50)}...` });
-      const saved = saveFrame(frameData);
+      const saved = await saveFrame(frameData);
       console.log('Frame saved:', saved);
+      
+      if (!saved) {
+        alert('Failed to save frame. Storage quota may be exceeded. Try deleting old frames.');
+        return;
+      }
       
       const retrieved = JSON.parse(localStorage.getItem('frameit_frames') || '{}');
       console.log('Stored frames:', Object.keys(retrieved));
@@ -105,7 +110,7 @@ export default function EditImagePage() {
       setShowShareModal(true);
     } catch (error) {
       console.error('Failed to save frame:', error);
-      alert('Failed to create shareable link. Please try again.');
+      alert('Failed to create shareable link. Storage may be full. Try clearing old frames.');
     }
   };
   
