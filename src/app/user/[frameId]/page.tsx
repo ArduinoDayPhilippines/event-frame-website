@@ -180,8 +180,6 @@ export default function SharedFramePage() {
     );
   }
 
-  const accentGreen = '#50E3C2';
-
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden relative" style={{
       background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
