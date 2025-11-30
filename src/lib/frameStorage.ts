@@ -54,7 +54,7 @@ export const saveFrame = async (frame: SavedFrame): Promise<boolean> => {
     
 		if (frame.imageUrl && frame.imageUrl.startsWith('data:image')) {
 			try {
-				frame.imageUrl = await compressImage(frame.imageUrl, 800, 0.7);
+				frame.imageUrl = await compressImage(frame.imageUrl, 500, 0.5);
 			} catch (compressionError) {
 				console.warn('Image compression failed, using original:', compressionError);
 			}
@@ -85,7 +85,8 @@ export const saveFrame = async (frame: SavedFrame): Promise<boolean> => {
 						(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 					);
           
-					const framesToRemove = Math.max(1, Math.ceil(frameIds.length * 0.3));
+					// Remove 60% of old frames
+					const framesToRemove = Math.max(1, Math.ceil(frameIds.length * 0.6));
 					for (let i = 0; i < framesToRemove; i++) {
 						delete frames[sortedFrames[i].frameId];
 					}
@@ -100,6 +101,10 @@ export const saveFrame = async (frame: SavedFrame): Promise<boolean> => {
 				}
 			} catch (recoveryError) {
 				console.error('Failed to recover from quota error:', recoveryError);
+			}
+			// Alert user if still failing
+			if (typeof window !== 'undefined') {
+				window.alert('Storage is full. Please delete some frames or clear your browser storage.');
 			}
 		}
     
