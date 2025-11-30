@@ -10,7 +10,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "FrameIt - Create Beautiful Image Frames",
+  title: "FrameIt",
   description: "Transform your images into stunning frames with custom captions and effects",
 };
 
