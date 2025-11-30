@@ -127,97 +127,100 @@ interface ControlPanelProps {
 		};
 
 		return (
-			<div 
-				className="bg-white/80 rounded-3xl shadow-xl px-6 py-3 w-full min-h-[180px] min-w-[600px] border border-[#e0e7ef] backdrop-blur-md flex flex-col gap-6"
-				style={{
-					background: `linear-gradient(135deg, #fff 70%, ${backgroundColor}10 100%)`,
-					boxShadow: '0 8px 32px 0 rgba(74,144,226,0.10), 0 1.5px 8px 0 rgba(80,227,194,0.08)'
-				}}
-			>
-				{/* Formatting Toolbar */}
-				<div className="flex flex-wrap gap-2 mb-2 items-center">
-					<button
-						type="button"
-						className={`px-2 py-1 rounded border border-gray-300 text-lg font-bold ${activeFormats.bold ? 'bg-blue-200 text-blue-800' : 'bg-gray-100 hover:bg-gray-200'}`}
-						title="Bold"
-						onClick={() => formatText('bold')}
-					>
-						<b>B</b>
-					</button>
-					<button
-						type="button"
-						className={`px-2 py-1 rounded border border-gray-300 text-lg italic ${activeFormats.italic ? 'bg-blue-200 text-blue-800' : 'bg-gray-100 hover:bg-gray-200'}`}
-						title="Italic"
-						onClick={() => formatText('italic')}
-					>
-						<i>I</i>
-					</button>
-					{/* Underline, Strikethrough, Font Family, and Insert Link removed */}
-					{/* Emoji Picker */}
-					<div className="relative">
+			<div>
+				<h2 className="text-2xl font-bold mb-4 text-gray-800">Caption Writer</h2>
+				<div 
+					className="bg-white/80 rounded-3xl shadow-xl px-6 py-3 w-full min-h-[180px] min-w-[600px] border border-[#e0e7ef] backdrop-blur-md flex flex-col gap-6"
+					style={{
+						background: `linear-gradient(135deg, #fff 70%, ${backgroundColor}10 100%)`,
+						boxShadow: '0 8px 32px 0 rgba(74,144,226,0.10), 0 1.5px 8px 0 rgba(80,227,194,0.08)'
+					}}
+				>
+					{/* Formatting Toolbar */}
+					<div className="flex flex-wrap gap-2 mb-2 items-center">
 						<button
 							type="button"
-							className="px-2 py-1 rounded border border-gray-300 text-lg bg-gray-100 hover:bg-gray-200"
-							title="Insert Emoji"
-							onClick={() => setShowEmojiPicker((v) => !v)}
+							className={`px-2 py-1 rounded border border-gray-300 text-lg font-bold ${activeFormats.bold ? 'bg-blue-200 text-blue-800' : 'bg-gray-100 hover:bg-gray-200'}`}
+							title="Bold"
+							onClick={() => formatText('bold')}
 						>
-							😊
+							<b>B</b>
 						</button>
-						{showEmojiPicker && (
-							<div className="absolute z-50 bg-white border border-gray-300 rounded shadow p-2 mt-1 flex flex-wrap gap-1 w-48"
-								style={{ maxHeight: '180px', overflowY: 'auto' }}>
-								{[  
-								'🚀','💻','✨','📈','📊','📅','📌','📎','📚','📝','🔗','✅','❌','⚡','🎯','🏆','🔒','🔓','🛡️','🌟','💡','🕒','🔔','📢','📣','🗂️','🗃️','🗄️','📂','📁','🗑️','🔍','🔎','🔬','🔭','📡','🧭','🧑‍💻','👨‍💻','👩‍💻','🤝','🤲','🙌','👏','🙏','🤔','💬','🗨️','🗣️','👥','👤','👔','🧑‍💼','👨‍💼','👩‍💼','🏢','🏛️','🏫','🏦','🏨','🏥','🏪','🏬','🏭','🏗️','🛠️','⚙️','🧰','🧲','🔧','🔩','🪛','🪚','🛒','💳','💰','💵','💴','💶','💷','🧾','📄','📃','📑','📋','📆','📇','📉','📍','📏','📐','✂️','🖇️','📔','📕','📗','📘','📙','📓','📒','🗒️','🗞️','📰','🔖','🔏','🔐','🔑','🗝️','🔨','🪓','⛏️','⚒️','🗡️','⚔️','🔫','🚪','🪑','🛏️','🛋️','🚽','🚿','🛁','🪒','🧴','🧷','🧹','🧺','🧻','🪣','🧼','🪥','🧽','🧯','🚬','⚰️','🪦','⚱️','🗿','🪧','🪪','🪫','🪬','🪭','🪮','🪯','🪰','🪱','🪲','🪳','🪴','🪵','🪶','🪷','🪸','🪹','🪺','🪻','🪼','🪽','🪾','🪿','🫀','🫁','🫂','🫃','🫄','🫅','🫐','🫑','🫒','🫓','🫔','🫕','🫖','🫗','🫘','🫙','🫚','🫛','🫠','🫡','🫢','🫣','🫤','🫥','🫦','🫧','🫨','❤','🧡','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','💌','💤','💢','💥','💦','💨','💫','💬','💭','🗯️','💋','💍','💎','💐','💑','💒','💓','💔','💖','💗','💘','💙','💚','💛','💜','🖤','💝','💞','💟','❣️','💕','💌','💏','💍','💎','💐','💑','💒'
-							].map((emoji, idx) => (
-									<button
-										key={emoji + idx}
-										type="button"
-										className="text-xl hover:bg-gray-200 rounded p-1"
-										onClick={() => handleEmojiSelect(emoji)}
-									>
-										{emoji}
-									</button>
-								))}
+						<button
+							type="button"
+							className={`px-2 py-1 rounded border border-gray-300 text-lg italic ${activeFormats.italic ? 'bg-blue-200 text-blue-800' : 'bg-gray-100 hover:bg-gray-200'}`}
+							title="Italic"
+							onClick={() => formatText('italic')}
+						>
+							<i>I</i>
+						</button>
+						{/* Underline, Strikethrough, Font Family, and Insert Link removed */}
+						{/* Emoji Picker */}
+						<div className="relative">
+							<button
+								type="button"
+								className="px-2 py-1 rounded border border-gray-300 text-lg bg-gray-100 hover:bg-gray-200"
+								title="Insert Emoji"
+								onClick={() => setShowEmojiPicker((v) => !v)}
+							>
+								😊
+							</button>
+							{showEmojiPicker && (
+								<div className="absolute z-50 bg-white border border-gray-300 rounded shadow p-2 mt-1 flex flex-wrap gap-1 w-48"
+									style={{ maxHeight: '180px', overflowY: 'auto' }}>
+									{[  
+									'🚀','💻','✨','📈','📊','📅','📌','📎','📚','📝','🔗','✅','❌','⚡','🎯','🏆','🔒','🔓','🛡️','🌟','💡','🕒','🔔','📢','📣','🗂️','🗃️','🗄️','📂','📁','🗑️','🔍','🔎','🔬','🔭','📡','🧭','🧑‍💻','👨‍💻','👩‍💻','🤝','🤲','🙌','👏','🙏','🤔','💬','🗨️','🗣️','👥','👤','👔','🧑‍💼','👨‍💼','👩‍💼','🏢','🏛️','🏫','🏦','🏨','🏥','🏪','🏬','🏭','🏗️','🛠️','⚙️','🧰','🧲','🔧','🔩','🪛','🪚','🛒','💳','💰','💵','💴','💶','💷','🧾','📄','📃','📑','📋','📆','📇','📉','📍','📏','📐','✂️','🖇️','📔','📕','📗','📘','📙','📓','📒','🗒️','🗞️','📰','🔖','🔏','🔐','🔑','🗝️','🔨','🪓','⛏️','⚒️','🗡️','⚔️','🔫','🚪','🪑','🛏️','🛋️','🚽','🚿','🛁','🪒','🧴','🧷','🧹','🧺','🧻','🪣','🧼','🪥','🧽','🧯','🚬','⚰️','🪦','⚱️','🗿','🪧','🪪','🪫','🪬','🪭','🪮','🪯','🪰','🪱','🪲','🪳','🪴','🪵','🪶','🪷','🪸','🪹','🪺','🪻','🪼','🪽','🪾','🪿','🫀','🫁','🫂','🫃','🫄','🫅','🫐','🫑','🫒','🫓','🫔','🫕','🫖','🫗','🫘','🫙','🫚','🫛','🫠','🫡','🫢','🫣','🫤','🫥','🫦','🫧','🫨','❤','🧡','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','💌','💤','💢','💥','💦','💨','💫','💬','💭','🗯️','💋','💍','💎','💐','💑','💒','💓','💔','💖','💗','💘','💙','💚','💛','💜','🖤','💝','💞','💟','❣️','💕','💌','💏','💍','💎','💐','💑','💒'
+									].map((emoji, idx) => (
+											<button
+												key={emoji + idx}
+												type="button"
+												className="text-xl hover:bg-gray-200 rounded p-1"
+												onClick={() => handleEmojiSelect(emoji)}
+											>
+												{emoji}
+											</button>
+										))}
+								</div>
+							)}
+						</div>
+					</div>
+					{/* Rich Text Editor */}
+					<div className="relative w-full mb-4">
+						{/* Copy All button */}
+						<button
+							type="button"
+							className="absolute top-2 right-2 p-1 rounded bg-white z-20 flex items-center justify-center min-w-[48px]"
+							onClick={handleCopyAll}
+							title={copySuccess ? 'Copied!' : 'Copy as Unicode styled text'}
+							style={{ boxShadow: 'none', border: 'none' }}
+							>
+							<Copy size={14} className={copySuccess ? 'text-green-600' : 'text-gray-700'} />
+							{copySuccess && <span className="ml-1 text-green-600 text-xs font-semibold">Copied!</span>}
+						</button>
+						<div
+							ref={editorRef}
+							className="w-full p-6 rounded-lg border-2 border-gray-200 focus:border-blue-400 focus:outline-none resize-none text-gray-700 bg-white min-h-[300px] min-w-[500px] text-lg"
+							contentEditable
+							suppressContentEditableWarning
+							onInput={handleInput}
+							style={{ whiteSpace: 'pre-wrap', position: 'relative', zIndex: 1 }}
+						/>
+						{/* Custom placeholder for rich text editor */}
+						{(!richCaption || richCaption === '<br>') && (
+							<div className="absolute left-0 top-0 p-4 text-gray-400 pointer-events-none select-none" style={{ zIndex: 0 }}>
+								Enter your caption here...
 							</div>
 						)}
 					</div>
+					{/* Share Frame Button */}
+					<YellowButton 
+						size="md" 
+						className="w-full py-3 text-base rounded-xl shadow-md hover:shadow-lg transition-all"
+						onClick={onShare}
+					>
+						Share Frame
+					</YellowButton>
 				</div>
-				{/* Rich Text Editor */}
-				<div className="relative w-full mb-4">
-					{/* Copy All button */}
-					<button
-						type="button"
-						className="absolute top-2 right-2 p-1 rounded bg-white z-20 flex items-center justify-center min-w-[48px]"
-						onClick={handleCopyAll}
-						title={copySuccess ? 'Copied!' : 'Copy as Unicode styled text'}
-						style={{ boxShadow: 'none', border: 'none' }}
-						>
-						<Copy size={14} className={copySuccess ? 'text-green-600' : 'text-gray-700'} />
-						{copySuccess && <span className="ml-1 text-green-600 text-xs font-semibold">Copied!</span>}
-					</button>
-					<div
-						ref={editorRef}
-						className="w-full p-6 rounded-lg border-2 border-gray-200 focus:border-blue-400 focus:outline-none resize-none text-gray-700 bg-white min-h-[300px] min-w-[500px] text-lg"
-						contentEditable
-						suppressContentEditableWarning
-						onInput={handleInput}
-						style={{ whiteSpace: 'pre-wrap', position: 'relative', zIndex: 1 }}
-					/>
-					{/* Custom placeholder for rich text editor */}
-					{(!richCaption || richCaption === '<br>') && (
-						<div className="absolute left-0 top-0 p-4 text-gray-400 pointer-events-none select-none" style={{ zIndex: 0 }}>
-							Enter your caption here...
-						</div>
-					)}
-				</div>
-				{/* Share Frame Button */}
-				<YellowButton 
-					size="md" 
-					className="w-full py-3 text-base rounded-xl shadow-md hover:shadow-lg transition-all"
-					onClick={onShare}
-				>
-					Share Frame
-				</YellowButton>
 			</div>
 		);
 	}
