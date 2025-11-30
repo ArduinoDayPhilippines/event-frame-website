@@ -3,13 +3,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Copy, Check } from 'lucide-react';
-import Header from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
 import FramePreview from '@/components/ui/FramePreview';
 import Slider from '@/components/ui/Slider';
 import TextArea from '@/components/ui/TextArea';
 import YellowButton from '@/components/ui/YellowButton';
-import CarouselSection from '@/components/sections/CarouselSection';
 import { getFrame, SavedFrame } from '@/lib/frameStorage';
 import { downloadFrame } from '@/lib/downloadFrame';
 
@@ -29,6 +27,10 @@ export default function SharedFramePage() {
   const [userScale, setUserScale] = useState(100);
   const [userRotate, setUserRotate] = useState(0);
   const [userCaption, setUserCaption] = useState('');
+  // Add position state for dragging
+  const [userImgPos, setUserImgPos] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef<{ x: number; y: number; offsetX: number; offsetY: number } | null>(null);
 
   useEffect(() => {
     if (!frameId) {
@@ -52,20 +54,16 @@ export default function SharedFramePage() {
 
   const handleDownload = async () => {
     if (!frame) return;
-    
     setIsDownloading(true);
     try {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('Could not get canvas context');
-
       const size = 1200;
       canvas.width = size;
       canvas.height = size;
-
       ctx.fillStyle = frame.frameColor || '#4A90E2';
       ctx.fillRect(0, 0, size, size);
-
       if (userImage) {
         const userImg = new Image();
         userImg.crossOrigin = 'anonymous';
@@ -74,15 +72,18 @@ export default function SharedFramePage() {
           userImg.onerror = reject;
           userImg.src = userImage;
         });
-
         ctx.save();
+        // Center of canvas
         ctx.translate(size / 2, size / 2);
+        // Apply drag offset (scale drag offset from preview to canvas size)
+        const previewSize = 600; // match md:w-[600px] in preview
+        const scaleFactor = size / previewSize;
+        ctx.translate(userImgPos.x * scaleFactor, userImgPos.y * scaleFactor);
         ctx.rotate((userRotate * Math.PI) / 180);
         ctx.scale(userScale / 100, userScale / 100);
         ctx.drawImage(userImg, -size / 2, -size / 2, size, size);
         ctx.restore();
       }
-
       const frameImg = new Image();
       frameImg.crossOrigin = 'anonymous';
       await new Promise((resolve, reject) => {
@@ -91,7 +92,6 @@ export default function SharedFramePage() {
         frameImg.src = frame.imageUrl;
       });
       ctx.drawImage(frameImg, 0, 0, size, size);
-
       canvas.toBlob((blob) => {
         if (!blob) {
           alert('Failed to create image');
@@ -104,7 +104,6 @@ export default function SharedFramePage() {
         link.click();
         URL.revokeObjectURL(url);
       }, 'image/png');
-
     } catch (error) {
       console.error('Download error:', error);
       alert('Failed to download frame. Please try again.');
@@ -131,6 +130,44 @@ export default function SharedFramePage() {
   const handleCreateYourOwn = () => {
     router.push('/upload');
   };
+
+  // Mouse event handlers for drag
+  const handleImgMouseDown = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    e.preventDefault();
+    setDragging(true);
+    const rect = (e.target as HTMLImageElement).getBoundingClientRect();
+    dragStart.current = {
+      x: e.clientX,
+      y: e.clientY,
+      offsetX: userImgPos.x,
+      offsetY: userImgPos.y,
+    };
+    document.body.style.cursor = 'grabbing';
+  };
+
+  useEffect(() => {
+    if (!dragging) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragStart.current) return;
+      const dx = e.clientX - dragStart.current.x;
+      const dy = e.clientY - dragStart.current.y;
+      setUserImgPos({
+        x: dragStart.current.offsetX + dx,
+        y: dragStart.current.offsetY + dy,
+      });
+    };
+    const handleMouseUp = () => {
+      setDragging(false);
+      dragStart.current = null;
+      document.body.style.cursor = '';
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dragging]);
 
   if (loading) {
     return (
@@ -165,7 +202,7 @@ export default function SharedFramePage() {
             backgroundPosition: '0 0, 40px 40px, 80px 20px, 20px 60px'
           }}
         />
-        <Header />
+        
         <main className="grow flex items-center justify-center px-6 relative z-10">
           <div className="text-center max-w-md">
             <div className="text-6xl mb-4">🖼️</div>
@@ -184,7 +221,7 @@ export default function SharedFramePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden relative" style={{
+    <div className="min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative" style={{
       background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
     }}>
       {/* Decorative dots pattern */}
@@ -224,10 +261,8 @@ export default function SharedFramePage() {
         }}
       />
 
-      <Header />
-
-      <main className="grow py-12 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <main className="grow py-12 px-6 relative z-10 flex items-center justify-center w-full">
+        <div className="max-w-7xl mx-auto w-full flex flex-col items-center justify-center">
           
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
@@ -241,19 +276,20 @@ export default function SharedFramePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
             <div className="flex flex-col items-center gap-6">
-              <div id="frame-preview" className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] shadow-2xl overflow-hidden" style={{ backgroundColor: frame.frameColor }}>
+              <div id="frame-preview" className="relative w-[480px] h-[480px] md:w-[600px] md:h-[600px] shadow-2xl overflow-hidden" style={{ backgroundColor: frame.frameColor }}>
                 <div className="absolute inset-0 flex items-center justify-center overflow-hidden" style={{ zIndex: 0 }}>
                   {userImage ? (
                     <img 
                       src={userImage}
                       alt="Your photo"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cursor-grab"
                       style={{
-                        transform: `scale(${userScale / 100}) rotate(${userRotate}deg)`,
-                        transition: 'transform 0.2s ease',
+                        transform: `translate(${userImgPos.x}px, ${userImgPos.y}px) scale(${userScale / 100}) rotate(${userRotate}deg)`,
+                        transition: dragging ? 'none' : 'transform 0.2s ease',
                         display: 'block',
                         opacity: 1
                       }}
+                      onMouseDown={handleImgMouseDown}
                       onLoad={(e) => {
                         console.log('User photo rendered:', userImage);
                         console.log('Image dimensions:', e.currentTarget.naturalWidth, 'x', e.currentTarget.naturalHeight);
@@ -264,7 +300,7 @@ export default function SharedFramePage() {
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-gray-100">
-                      <span className="text-4xl font-bold text-gray-400">Upload Photo</span>
+                      <span className="text-xl font-bold text-gray-400">Upload your Photo</span>
                     </div>
                   )}
                 </div>
@@ -374,11 +410,7 @@ export default function SharedFramePage() {
           </div>
         </div>
       </main>
-
-      <CarouselSection />
-
       <Footer />
-      
       {/* Hidden file input */}
       <input
         ref={fileInputRef}
