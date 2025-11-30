@@ -3,6 +3,7 @@
 import CloudUploadIcon from './CloudUpload';
 import YellowButton from './YellowButton';
 import React, { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const MIN_DIMENSION = 100;
@@ -17,6 +18,7 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
 	const [isDragging, setIsDragging] = useState(false);
 	const [statusMessage, setStatusMessage] = useState<string | null>(null);
 	const [isValidating, setIsValidating] = useState(false);
+	const router = useRouter();
 
 	const fileName = uploadedFile?.name || null;
 
@@ -113,8 +115,11 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
         
 		if (isValid) {
 			onFileDrop(file);
+			setTimeout(() => {
+				router.push('/edit');
+			}, 1000);
 		}
-	}, [onFileDrop, validateFile]);
+	}, [onFileDrop, validateFile, router]);
 
 	const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -126,10 +131,13 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
         
 		if (isValid) {
 			onFileDrop(file);
+			setTimeout(() => {
+				router.push('/edit');
+			}, 1000);
 		}
         
 		e.target.value = '';
-	}, [onFileDrop, validateFile]);
+	}, [onFileDrop, validateFile, router]);
 
 	const ovalGradient = 'linear-gradient(90deg, #f0fdf4 0%, #ffffff 100%)';
     
