@@ -18,20 +18,53 @@ export default function Slider({
 	step = 1
 }: SliderProps) {
 	return (
-		   <div className="mb-6">
-			   <label className="block text-gray-800 text-base font-semibold mb-2 tracking-wide drop-shadow-sm">
-				   {label}: <span className="font-bold text-yellow-500">{value}{label === 'Rotate' ? '°' : '%'}</span>
-			   </label>
-			   <input
-				   type="range"
-				   min={min}
-				   max={max}
-				   step={step}
-				   value={value}
-				   onChange={(e) => onChange(Number(e.target.value))}
-				   className="w-full h-3 bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200 slider"
-				   style={{ accentColor: '#FFD600' }}
-			   />
-		   </div>
+		 <div className="mb-4">
+				 <label className="block text-gray-700 text-sm font-medium mb-2">
+						 {label}: <span className="font-mono text-gray-900">{value}{label === 'Rotate' ? '°' : '%'}</span>
+				 </label>
+				 <input
+						 type="range"
+						 min={min}
+						 max={max}
+						 step={step}
+						 value={value}
+						 onChange={(e) => onChange(Number(e.target.value))}
+						 className="w-full h-2 bg-gray-200 rounded appearance-none cursor-pointer focus:outline-none slider"
+						 style={{ accentColor: '#333' }}
+				 />
+				 <style jsx>{`
+					 input[type='range'].slider::-webkit-slider-thumb {
+						 appearance: none;
+						 width: 16px;
+						 height: 16px;
+						 background: #fff;
+						 border: 2px solid #333;
+						 border-radius: 50%;
+					 }
+					 input[type='range'].slider::-moz-range-thumb {
+						 width: 16px;
+						 height: 16px;
+						 background: #fff;
+						 border: 2px solid #333;
+						 border-radius: 50%;
+					 }
+					 input[type='range'].slider::-ms-thumb {
+						 width: 16px;
+						 height: 16px;
+						 background: #fff;
+						 border: 2px solid #333;
+						 border-radius: 50%;
+					 }
+					 input[type='range'].slider::-webkit-slider-thumb:active {
+						 background: #eee;
+					 }
+					 input[type='range'].slider::-moz-range-thumb:active {
+						 background: #eee;
+					 }
+					 input[type='range'].slider::-ms-thumb:active {
+						 background: #eee;
+					 }
+				 `}</style>
+		 </div>
 	);
 }
