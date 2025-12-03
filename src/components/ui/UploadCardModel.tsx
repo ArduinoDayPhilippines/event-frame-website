@@ -22,65 +22,64 @@ export const UploadCardModel: React.FC<UploadCardModelProps> = ({ onFileDrop, up
 
 	const fileName = uploadedFile?.name || null;
 
-	const showStatus = (message: string, type: 'error' | 'success' = 'error') => {
-		setStatusMessage(message);
-		setTimeout(() => setStatusMessage(null), type === 'error' ? 4000 : 3000);
-	};
+		const showStatus = (message: string, type: 'error' | 'success' = 'error') => {
+			setStatusMessage(message);
+			setTimeout(() => setStatusMessage(null), type === 'error' ? 4000 : 3000);
+		};
 
-	const validateFile = useCallback(async (file: File): Promise<boolean> => {
-		if (!ALLOWED_TYPES.includes(file.type)) {
-			showStatus('Invalid file type. Please upload JPG or PNG images only.');
-			return false;
-		}
+		const getImageDimensions = useCallback((file: File): Promise<{ width: number; height: number }> => {
+			return new Promise((resolve, reject) => {
+				const img = new Image();
+				const url = URL.createObjectURL(file);
 
-		if (file.size > MAX_FILE_SIZE) {
-			showStatus(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB.`);
-			return false;
-		}
+				img.onload = () => {
+					URL.revokeObjectURL(url);
+					resolve({ width: img.width, height: img.height });
+				};
 
-		if (file.size === 0) {
-			showStatus('File is empty. Please select a valid image.');
-			return false;
-		}
+				img.onerror = () => {
+					URL.revokeObjectURL(url);
+					reject(new Error('Failed to load image'));
+				};
 
-		try {
-			const dimensions = await getImageDimensions(file);
-            
-			if (dimensions.width < MIN_DIMENSION || dimensions.height < MIN_DIMENSION) {
-				showStatus(`Image too small. Minimum dimensions: ${MIN_DIMENSION}x${MIN_DIMENSION}px.`);
+				img.src = url;
+			});
+		}, []);
+
+		const validateFile = useCallback(async (file: File): Promise<boolean> => {
+			if (!ALLOWED_TYPES.includes(file.type)) {
+				showStatus('Invalid file type. Please upload JPG or PNG images only.');
 				return false;
 			}
 
-			if (dimensions.width > MAX_DIMENSION || dimensions.height > MAX_DIMENSION) {
-				showStatus(`Image too large. Maximum dimensions: ${MAX_DIMENSION}x${MAX_DIMENSION}px.`);
+			if (file.size > MAX_FILE_SIZE) {
+				showStatus(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB.`);
 				return false;
 			}
 
-			return true;
-		} catch (error) {
-			showStatus('Failed to read image. Please try another file.');
-			return false;
-		}
-	}, []);
+			if (file.size === 0) {
+				showStatus('File is empty. Please select a valid image.');
+				return false;
+			}
 
-	const getImageDimensions = (file: File): Promise<{ width: number; height: number }> => {
-		return new Promise((resolve, reject) => {
-			const img = new Image();
-			const url = URL.createObjectURL(file);
+			try {
+				const dimensions = await getImageDimensions(file);
+				if (dimensions.width < MIN_DIMENSION || dimensions.height < MIN_DIMENSION) {
+					showStatus(`Image too small. Minimum dimensions: ${MIN_DIMENSION}x${MIN_DIMENSION}px.`);
+					return false;
+				}
 
-			img.onload = () => {
-				URL.revokeObjectURL(url);
-				resolve({ width: img.width, height: img.height });
-			};
+				if (dimensions.width > MAX_DIMENSION || dimensions.height > MAX_DIMENSION) {
+					showStatus(`Image too large. Maximum dimensions: ${MAX_DIMENSION}x${MAX_DIMENSION}px.`);
+					return false;
+				}
 
-			img.onerror = () => {
-				URL.revokeObjectURL(url);
-				reject(new Error('Failed to load image'));
-			};
-
-			img.src = url;
-		});
-	};
+				return true;
+			} catch {
+				showStatus('Failed to read image. Please try another file.');
+				return false;
+			}
+		}, [getImageDimensions]);
 
 	const handleDragOver = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
 		e.preventDefault();
