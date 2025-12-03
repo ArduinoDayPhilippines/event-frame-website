@@ -8,7 +8,6 @@ export default function LandingFooter() {
   const currentYear = new Date().getFullYear();
   const contactEmail = "contact@frameit.com";
   
-  const footerBgColor = '#4A90E2';
 
   const scrollToSection = (sectionId: string) => {
     if (pathname === '/') {
