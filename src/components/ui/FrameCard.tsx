@@ -1,4 +1,6 @@
 
+import Image from 'next/image';
+
 
 interface FrameCardProps {
 	title: string;
@@ -17,12 +19,16 @@ export default function FrameCard({
 	return (
 		<div className="flex flex-col items-center">
 			{imageUrl ? (
-				<img 
-					src={imageUrl} 
-					alt={title}
-					className="w-24 h-24 object-cover rounded-sm shadow-lg mb-3 border border-gray-200"
-					style={{ backgroundColor: frameColor }}
-				/>
+				<div className="w-24 h-24 rounded-sm shadow-lg mb-3 border border-gray-200" style={{ backgroundColor: frameColor, position: 'relative' }}>
+					<Image
+						src={imageUrl}
+						alt={title}
+						fill
+						className="object-cover rounded-sm"
+						sizes="96px"
+						priority
+					/>
+				</div>
 			) : (
 				<div 
 					className="w-24 h-24 rounded-sm shadow-lg mb-3"
