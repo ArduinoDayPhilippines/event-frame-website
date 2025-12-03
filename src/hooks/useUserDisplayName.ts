@@ -12,7 +12,7 @@ export function useUserDisplayName() {
           if (data.display_name) {
             setDisplayName(data.display_name);
           }
-        } catch (err) {
+        } catch {
           // Ignore JSON parse errors
         }
       });
