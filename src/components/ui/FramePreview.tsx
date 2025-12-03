@@ -11,20 +11,19 @@ export default function FramePreview({
 }: FramePreviewProps) {
 	return (
 		<div className="flex flex-col items-center">
-			   <div 
-				   id="frame-preview"
-				   className="relative w-[520px] h-[520px] md:w-[680px] md:h-[680px] shadow-2xl overflow-hidden"
-				   style={{
-					   backgroundColor: frameColor
-				   }}
-			   >
-				<div className="absolute inset-0 flex items-center justify-center">
-					<div className="text-center text-white text-opacity-30">
+			<div 
+				id="frame-preview"
+				className="relative w-[520px] h-[520px] md:w-[680px] md:h-[680px] shadow-2xl overflow-hidden ml-10"
+				style={{
+					backgroundColor: frameColor
+				}}
+			>
+				<div className="absolute inset-0 flex items-center justify-center bg-white">
+					<div className="text-center text-gray-400">
 						<div className="text-6xl mb-2">📷</div>
 						<p className="text-sm">User photo will appear here</p>
 					</div>
 				</div>
-        
 				{frameUrl && (
 					<div className="absolute inset-0 pointer-events-none z-10">
 						<img 
