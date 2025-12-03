@@ -2,7 +2,6 @@
 
 
 import { useRouter, usePathname } from 'next/navigation';
-import YellowButton from '../ui/YellowButton';
 import React, { useEffect, useState } from 'react';
 
 export default function Navbar() {
