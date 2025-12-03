@@ -1,5 +1,7 @@
 "use client";
 
+import Image from 'next/image';
+
 import { useRouter } from 'next/navigation';
 import {
   Carousel,
@@ -49,10 +51,13 @@ export default function CarouselSection() {
                 onClick={() => handleFrameClick(frame.frameId)}
               >
                 <div className="w-48 h-48 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-white mx-auto">
-                  <img 
-                    src={frame.imageUrl} 
+                  <Image
+                    src={frame.imageUrl}
                     alt={frame.caption || 'Frame'}
-                    className="w-full h-full object-cover hover:brightness-110 transition-all duration-300"
+                    fill
+                    className="object-cover hover:brightness-110 transition-all duration-300"
+                    sizes="192px"
+                    priority
                   />
                 </div>
               </CarouselItem>
