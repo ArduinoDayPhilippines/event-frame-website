@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Header from '@/components/sections/Navbar';
 import LandingFooter from '@/components/sections/LandingFooter';
-import YellowButton from '@/components/ui/YellowButton';
 import AboutSection from '@/components/sections/AboutSection';
 import FeaturesSection from '@/components/sections/FeaturesSection';
 import HeroSection from '@/components/sections/HeroSection';
