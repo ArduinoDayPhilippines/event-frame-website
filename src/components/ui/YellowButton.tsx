@@ -7,6 +7,7 @@ interface YellowButtonProps {
 	className?: string;
 	size?: "sm" | "md" | "lg";
 	fullRounded?: boolean;
+	disabled?: boolean;
 }
 
 export default function YellowButton({ 
@@ -15,7 +16,8 @@ export default function YellowButton({
 	type = "button",
 	className = "",
 	size = "md",
-	fullRounded = true
+	fullRounded = true,
+	disabled = false
 }: YellowButtonProps) {
 	const sizeClasses = {
 		sm: "px-4 py-1.5 text-sm",
@@ -29,7 +31,12 @@ export default function YellowButton({
 		<button
 			type={type}
 			onClick={onClick}
-			className={`${sizeClasses[size]} ${roundedClass} font-bold bg-yellow-400 text-gray-900 hover:bg-yellow-500 transition-colors shadow-md cursor-pointer ${className}`}
+			className={
+				`${sizeClasses[size]} ${roundedClass} font-bold bg-yellow-400 text-gray-900 ` +
+				`${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-500 cursor-pointer'} ` +
+				`transition-colors shadow-md ${className}`
+			}
+			disabled={disabled}
 		>
 			{children}
 		</button>
