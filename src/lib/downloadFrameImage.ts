@@ -1,5 +1,7 @@
+import { SavedFrame } from '@/lib/frameStorage';
+
 interface DownloadFrameImageOptions {
-  frame: any;
+  frame: SavedFrame;
   userImage: string;
   userImgPos: { x: number; y: number };
   userScale: number;
