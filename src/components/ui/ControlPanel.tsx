@@ -1,6 +1,6 @@
 "use client";
 import { Copy } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import YellowButton from './YellowButton';
 import { useRichTextFormatting } from '../../hooks/useRichTextFormatting';
 import { useEmojiPicker } from '../../hooks/useEmojiPicker';
@@ -106,7 +106,7 @@ interface ControlPanelProps {
 					textarea.select();
 					success = document.execCommand('copy');
 					document.body.removeChild(textarea);
-				} catch (e) {
+				} catch {
 					success = false;
 				}
 				if (!success) {
