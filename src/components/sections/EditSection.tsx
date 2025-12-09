@@ -11,6 +11,7 @@ import ShareModal from '@/components/modals/ShareModal';
 // import { useRouter } from 'next/navigation';
 import { useShareFrame } from '@/hooks/useShareFrame';
 import { useRedirectIfNoImage } from '@/hooks/useRedirectIfNoImage';
+import { saveFrame, fileToBase64 } from '@/lib/frameStorage';
 
 
 export default function EditSection() {
@@ -18,6 +19,8 @@ export default function EditSection() {
   const [domain, setDomain] = useState('');
   const [template, setTemplate] = useState('');
   const [showLoading, setShowLoading] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const templateBy = useUserDisplayName();
   const {
     imageUrl,
@@ -31,7 +34,7 @@ export default function EditSection() {
   } = useFrame();
 
   useRedirectIfNoImage(imageUrl);
-  const { handleShare, showShareModal, setShowShareModal, shareUrl, loading } = useShareFrame({
+  const { handleShare, showShareModal, setShowShareModal, shareUrl, displayUrl, loading } = useShareFrame({
     imageUrl: imageUrl as string,
     scale,
     rotate,
@@ -46,6 +49,39 @@ export default function EditSection() {
   React.useEffect(() => {
     setShowLoading(loading);
   }, [loading]);
+
+  const handleSave = async () => {
+    if (!imageUrl || !frameId) return;
+    setIsSaving(true);
+    try {
+      let imageData = imageUrl;
+      if (imageUrl.startsWith('blob:')) {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        imageData = await fileToBase64(blob as File);
+      }
+      const frameData = {
+        frameId,
+        imageUrl: imageData,
+        scale,
+        rotate,
+        caption,
+        frameColor: frameColor || '#4A90E2',
+        templateName: template || 'name',
+        customPath: domain ? `${domain}.vercel.app` : '',
+        createdAt: new Date().toISOString(),
+      };
+      const saved = await saveFrame(frameData);
+      if (saved) {
+        window.location.href = '/upload';
+      }
+    } catch (error) {
+      console.error('Failed to save frame:', error);
+      alert(`Failed to save frame: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const primaryBlue = frameColor || '#4A90E2';
   const accentGreen = '#50E3C2';
@@ -189,10 +225,23 @@ export default function EditSection() {
         isOpen={showShareModal}
         onClose={() => {
           setShowShareModal(false);
-          window.location.href = '/upload';
+          setShowSaveButton(true);
         }}
         shareUrl={shareUrl}
+        displayUrl={displayUrl}
       />
+      {showSaveButton && (
+        <div className="fixed bottom-8 right-8 z-40">
+          <YellowButton
+            size="lg"
+            onClick={handleSave}
+            disabled={isSaving}
+            className="shadow-2xl"
+          >
+            {isSaving ? 'Saving...' : 'Save'}
+          </YellowButton>
+        </div>
+      )}
     </div>
   );
 }
