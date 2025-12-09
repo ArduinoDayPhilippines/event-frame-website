@@ -17,7 +17,7 @@ export default function CarouselSection() {
   const { frames, loading } = useFrames();
 
   const handleFrameClick = (frameId: string) => {
-    router.push(`/user/${frameId}`);
+    router.push(`/${frameId}`);
   };
 
   if (loading) {
