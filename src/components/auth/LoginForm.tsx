@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import YellowButton from '@/components/ui/YellowButton';
+import { supabase } from '@/lib/supabase/supabase';
+
 export default function LoginPage() {
   const [remember, setRemember] = useState(false);
   const [email, setEmail] = useState('');
@@ -28,6 +30,13 @@ export default function LoginPage() {
           setError(result.error || 'Sign in failed');
         }
       } else {
+        // Set session in Supabase client
+        if (result.session) {
+          await supabase.auth.setSession({
+            access_token: result.session.access_token,
+            refresh_token: result.session.refresh_token,
+          });
+        }
         window.location.href = '/upload';
       }
     } catch {
