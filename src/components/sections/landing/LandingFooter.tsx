@@ -77,7 +77,7 @@ export default function LandingFooter() {
 
         <div className="border-t border-blue-200/40 py-3 text-center text-xs text-blue-50 tracking-wide">
           <span className="inline-block bg-white/10 px-3 py-1 rounded-lg shadow-sm">
-            © {currentYear} <span className="font-bold">FrameIt</span>. All rights reserved. | Designed for your story.
+            © {currentYear} <span className="font-bold">ICPEP SE - PUP Manila</span>. All rights reserved. | Designed for your story.
           </span>
         </div>
       </div>
