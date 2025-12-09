@@ -17,6 +17,7 @@ type UseShareFrameResult = {
   showShareModal: boolean;
   setShowShareModal: (open: boolean) => void;
   shareUrl: string;
+  displayUrl: string;
   loading: boolean;
 };
 
@@ -24,6 +25,7 @@ type UseShareFrameResult = {
 export function useShareFrame({ imageUrl, scale, rotate, caption, frameColor, templateName, customPath, frameId, setFrameId }: UseShareFrameArgs): UseShareFrameResult {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
+  const [displayUrl, setDisplayUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   const generateTempFrameId = () => {
@@ -61,12 +63,17 @@ export function useShareFrame({ imageUrl, scale, rotate, caption, frameColor, te
         setLoading(false);
         return;
       }
-      // Use custom domain if provided, otherwise use current origin
-      const baseUrl = customPath && customPath.trim() 
-        ? `https://${customPath}.vercel.app` 
-        : window.location.origin;
-      const url = `${baseUrl}/user/${currentFrameId}`;
+      // Always use the actual deployed URL to avoid 404 errors
+      const baseUrl = window.location.origin;
+      const url = `${baseUrl}/${currentFrameId}`;
       setShareUrl(url);
+      
+      // Set display URL: use custom path with frameId if provided, otherwise use real URL
+      const display = customPath && customPath.trim()
+        ? `https://${customPath}.vercel.app/${currentFrameId}`
+        : url;
+      setDisplayUrl(display);
+      
       setShowShareModal(true);
     } catch (error) {
       console.error('Failed to save frame:', error);
@@ -76,7 +83,7 @@ export function useShareFrame({ imageUrl, scale, rotate, caption, frameColor, te
     }
   };
 
-  return { handleShare, showShareModal, setShowShareModal, shareUrl, loading };
+  return { handleShare, showShareModal, setShowShareModal, shareUrl, displayUrl, loading };
 }
 import { useState } from 'react';
 import { saveFrame, fileToBase64 } from '@/lib/frameStorage';
