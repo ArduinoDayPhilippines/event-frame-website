@@ -248,7 +248,7 @@ export default function SharedFrameSection() {
                   <div
                     key={creatorFrame.frameId}
                     className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                    onClick={() => router.push(`/user/${creatorFrame.frameId}`)}
+                    onClick={() => router.push(`/${creatorFrame.frameId}`)}
                   >
                     <div className="relative w-full h-64">
                       <Image
