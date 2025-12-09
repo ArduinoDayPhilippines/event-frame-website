@@ -7,7 +7,7 @@ export default function LandingFooter() {
   const router = useRouter();
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
-  const contactEmail = "contact@frameit.com";
+  // const contactEmail = "contact@frameit.com";
   
 
   const scrollToSection = (sectionId: string) => {
