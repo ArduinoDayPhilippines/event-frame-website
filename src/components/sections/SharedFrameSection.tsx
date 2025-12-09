@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Footer from '@/components/sections/Footer';
 import YellowButton from '@/components/ui/YellowButton';
 import { downloadFrameImage } from '@/lib/downloadFrameImage';
@@ -10,15 +10,19 @@ import { useLoadFrame } from '@/hooks/useLoadFrame';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import FramePreview from '@/components/ui/FramePreview';
 import CustomizePanel from '@/components/ui/CustomizePanel';
+import { getFramesByUserId, SavedFrame } from '@/lib/frameStorage';
+import Image from 'next/image';
 
 export default function SharedFrameSection() {
   const params = useParams();
+  const router = useRouter();
   const frameId = params.frameId as string;
   const [userImage, setUserImage] = useState<string>('');
   const [userScale, setUserScale] = useState(100);
   const [userRotate, setUserRotate] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
   const [creatorDisplayName, setCreatorDisplayName] = useState<string>('Original Creator');
+  const [creatorFrames, setCreatorFrames] = useState<SavedFrame[]>([]);
   const { frame, loading, notFound, userCaption, setUserCaption } = useLoadFrame(frameId);
   const { copied: captionCopied, copy } = useCopyToClipboard();
   // File input handling (replaces useFileInput)
@@ -59,6 +63,24 @@ export default function SharedFrameSection() {
 
     fetchCreatorName();
   }, [frame?.userId]);
+
+  // Fetch more frames from the same creator
+  useEffect(() => {
+    const fetchCreatorFrames = async () => {
+      if (!frame?.userId) return;
+      
+      try {
+        const frames = await getFramesByUserId(frame.userId);
+        // Filter out the current frame
+        const otherFrames = frames.filter(f => f.frameId !== frameId);
+        setCreatorFrames(otherFrames);
+      } catch (error) {
+        console.error('Failed to fetch creator frames:', error);
+      }
+    };
+
+    fetchCreatorFrames();
+  }, [frame?.userId, frameId]);
 
   const handleDownload = async () => {
     if (!frame) return;
@@ -214,7 +236,45 @@ export default function SharedFrameSection() {
             </div>
 
           </div>
+
+          {/* More frames from creator */}
+          {creatorFrames.length > 0 && (
+            <div className="mt-20 w-full">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+                Try Out More Frames from {creatorDisplayName}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {creatorFrames.map((creatorFrame) => (
+                  <div
+                    key={creatorFrame.frameId}
+                    className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    onClick={() => router.push(`/user/${creatorFrame.frameId}`)}
+                  >
+                    <div className="relative w-full h-64">
+                      <Image
+                        src={creatorFrame.imageUrl}
+                        alt={`Frame by ${creatorDisplayName}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {creatorFrame.caption ? (
+                          <span dangerouslySetInnerHTML={{ __html: creatorFrame.caption }} />
+                        ) : (
+                          'No caption'
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
+
       </main>
       <Footer />
       {/* Hidden file input */}
