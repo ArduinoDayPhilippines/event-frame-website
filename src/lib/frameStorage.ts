@@ -171,6 +171,39 @@ export const getFrame = async (frameId: string): Promise<SavedFrame | null> => {
 	}
 };
 
+export const getFramesByUserId = async (userId: string): Promise<SavedFrame[]> => {
+	try {
+		const { data, error } = await supabase
+			.from('frames')
+			.select('*')
+			.eq('user_id', userId)
+			.eq('sharing', true)
+			.order('created_at', { ascending: false })
+			.limit(6);
+
+		if (error) {
+			console.error('Failed to get frames by user:', error);
+			return [];
+		}
+
+		return (data || []).map(record => ({
+			frameId: record.frame_id,
+			imageUrl: record.image_url,
+			scale: 100,
+			rotate: 0,
+			caption: record.caption || '',
+			frameColor: '#4A90E2',
+			templateName: record.template_name || '',
+			customPath: record.custom_path,
+			createdAt: record.created_at,
+			userId: record.user_id,
+		}));
+	} catch (error) {
+		console.error('Failed to get frames by user:', error);
+		return [];
+	}
+};
+
 export const getAllFrames = async (): Promise<Record<string, SavedFrame>> => {
 	try {
 		const userId = await getUserId();
