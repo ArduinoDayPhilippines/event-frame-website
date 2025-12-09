@@ -3,6 +3,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const router = useRouter();
@@ -59,9 +60,16 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div
-          className={`text-xl font-bold cursor-pointer hover:opacity-80 transition-opacity ${scrolled ? 'text-black' : 'text-white'}`}
+          className={`text-xl font-bold cursor-pointer hover:opacity-80 transition-opacity ${scrolled ? 'text-black' : 'text-white'} flex items-center gap-2`}
           onClick={handleHomeClick}
         >
+          <Image 
+            src="/favicon.ico" 
+            alt="FrameIt Logo" 
+            width={35} 
+            height={35}
+            className="object-contain"
+          />
           FrameIt
         </div>
 
