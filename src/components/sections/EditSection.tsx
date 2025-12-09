@@ -132,7 +132,7 @@ export default function EditSection() {
               <div className="w-full max-w-md flex flex-col gap-4 mb-20">
                 {/* Domain name input */}
                 <div>
-                  <label htmlFor="domain" className="block text-sm font-medium text-gray-700 mb-1">Custom Domain</label>
+                  <label htmlFor="domain" className="block text-sm font-medium text-gray-700 mb-1">Custom Path</label>
                   <div className="flex items-center">
                     <input
                       id="domain"
