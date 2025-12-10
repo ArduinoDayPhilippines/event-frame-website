@@ -182,7 +182,7 @@ export default function EditSection() {
                     className="w-full px-4 py-2 rounded-xl bg-white border border-gray-300 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4A90E2]"
                     placeholder="Enter template name"
                     value={template}
-                    onChange={e => setTemplate(e.target.value)}
+                    onChange={e => setTemplate(e.target.value.replace(/\s+/g, '-'))}
                   />
                 </div>
                 {/* Caption writer */}
