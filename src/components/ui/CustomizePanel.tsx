@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from 'react';
-import { Copy, Check, Link } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import YellowButton from './YellowButton';
 
 // Slider component
@@ -90,6 +90,7 @@ function TextArea({
 	const [activeFormats, setActiveFormats] = useState({ bold: false, italic: false });
 	const [showLinkInput, setShowLinkInput] = useState(false);
 	const [linkUrl, setLinkUrl] = useState('');
+	const [savedSelection, setSavedSelection] = useState<Range | null>(null);
 	
 	const handleInput = () => {
 		if (editorRef.current) {
@@ -142,39 +143,40 @@ function TextArea({
 		}
 	};
 
-	const handleAddLink = () => {
-		const selection = window.getSelection();
-		if (!selection || selection.toString().trim() === '') {
-			alert('Please select some text first');
-			return;
-		}
-		setShowLinkInput(true);
-	};
-
 	const handleInsertLink = () => {
 		if (!linkUrl.trim()) {
 			alert('Please enter a URL');
 			return;
 		}
 		
-		const selection = window.getSelection();
-		if (selection && selection.toString().trim()) {
-			const selectedText = selection.toString();
-			const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">${selectedText}</a>`;
-			document.execCommand('insertHTML', false, linkHtml);
-			
-			if (editorRef.current) {
-				onChange(editorRef.current.innerHTML);
+		// Restore the saved selection
+		if (savedSelection && editorRef.current) {
+			const selection = window.getSelection();
+			if (selection) {
+				selection.removeAllRanges();
+				selection.addRange(savedSelection);
+				
+				const selectedText = selection.toString();
+				if (selectedText.trim()) {
+					const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">${selectedText}</a>`;
+					document.execCommand('insertHTML', false, linkHtml);
+					
+					if (editorRef.current) {
+						onChange(editorRef.current.innerHTML);
+					}
+				}
 			}
 		}
 		
 		setShowLinkInput(false);
 		setLinkUrl('');
+		setSavedSelection(null);
 	};
 
 	const handleCancelLink = () => {
 		setShowLinkInput(false);
 		setLinkUrl('');
+		setSavedSelection(null);
 	};
 
 	const handlePaste = (e: React.ClipboardEvent) => {
@@ -196,6 +198,17 @@ function TextArea({
 		}
 	};
 	
+	const handleEditorClick = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+		if (target.tagName === 'A') {
+			e.preventDefault();
+			const href = target.getAttribute('href');
+			if (href) {
+				window.open(href, '_blank', 'noopener,noreferrer');
+			}
+		}
+	};
+	
 	return (
 		<div className="relative w-full">
 			{/* Formatting Toolbar */}
@@ -214,19 +227,9 @@ function TextArea({
 					title="Italic"
 					onClick={() => formatText('italic')}
 				>
-					<i>I</i>
-				</button>
-				<button
-					type="button"
-					className="px-2 py-1 rounded border border-gray-300 text-sm bg-gray-100 hover:bg-gray-200"
-					title="Insert Link"
-					onClick={handleAddLink}
-				>
-					<Link size={16} />
-				</button>
-			</div>
-			
-			{/* Link Input Modal */}
+				<i>I</i>
+			</button>
+		</div>			{/* Link Input Modal */}
 			{showLinkInput && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 					<div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
@@ -268,6 +271,7 @@ function TextArea({
 				suppressContentEditableWarning
 				onInput={handleInput}
 				onPaste={handlePaste}
+				onClick={handleEditorClick}
 				style={{ whiteSpace: 'pre-wrap', position: 'relative', zIndex: 1 }}
 			/>
 			{(!value || value === '<br>') && (

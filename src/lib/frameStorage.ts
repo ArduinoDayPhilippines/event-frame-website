@@ -98,12 +98,14 @@ export const saveFrame = async (frame: SavedFrame): Promise<boolean> => {
 		// Save frame metadata to database
 		if (existingFrame) {
 		// Update existing
+		const templateNameValue = frame.templateName || 'name';
 		const { error: dbError } = await supabase
 			.from('frames')
 			.update({
 				caption: frame.caption,
 				image_url: imageUrl,
-				template_name: frame.templateName || 'name',
+				template_name: templateNameValue,
+				frame_id: templateNameValue,
 				sharing: true,
 			})
 			.eq('id', existingFrame.id);			if (dbError) {
@@ -113,15 +115,16 @@ export const saveFrame = async (frame: SavedFrame): Promise<boolean> => {
 			}
 		} else {
 		// Insert new
+		const templateNameValue = frame.templateName || 'name';
 		const { error: dbError } = await supabase
 			.from('frames')
 			.insert({
 				user_id: userId,
 				caption: frame.caption,
 				image_url: imageUrl,
-				template_name: frame.templateName || 'name',
+				template_name: templateNameValue,
 				sharing: true,
-				frame_id: frame.frameId,
+				frame_id: templateNameValue,
 				created_at: frame.createdAt,
 			});			if (dbError) {
 				console.error('Failed to insert frame:', dbError);

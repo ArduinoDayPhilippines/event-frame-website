@@ -13,8 +13,8 @@ import YellowButton from '@/components/ui/YellowButton';
 import { useRouter } from 'next/navigation';
 
 export default function UploadSection() {
-    const { imageFile, setImageFile, loadFrame } = useFrame();
-    const { showSuccess, handleFileDrop } = useUploadHandler(setImageFile);
+    const { imageFile, setImageFile, loadFrame, setCaption } = useFrame();
+    const { showSuccess, handleFileDrop } = useUploadHandler(setImageFile, setCaption);
     const router = useRouter();
     const primaryBlue = '#4A90E2';
     const accentGreen = '#50E3C2';

@@ -260,12 +260,8 @@ export default function SharedFrameSection() {
                       />
                     </div>
                     <div className="p-4">
-                      <p className="text-sm text-gray-600 line-clamp-2">
-                        {creatorFrame.caption ? (
-                          <span dangerouslySetInnerHTML={{ __html: creatorFrame.caption }} />
-                        ) : (
-                          'No caption'
-                        )}
+                      <p className="text-sm text-gray-600 font-medium">
+                        {creatorFrame.templateName || 'Untitled Frame'}
                       </p>
                     </div>
                   </div>

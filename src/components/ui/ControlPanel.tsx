@@ -1,5 +1,5 @@
 "use client";
-import { Copy, Link } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import YellowButton from './YellowButton';
 import { useRichTextFormatting } from '../../hooks/useRichTextFormatting';
@@ -32,11 +32,12 @@ interface ControlPanelProps {
 			showEmojiPicker,
 			setShowEmojiPicker,
 			handleEmojiSelect,
-		} = useEmojiPicker((emoji) => formatText('insertText', emoji));
+	} = useEmojiPicker((emoji) => formatText('insertText', emoji));
 
 	const [copySuccess, setCopySuccess] = useState(false);
 	const [showLinkInput, setShowLinkInput] = useState(false);
 	const [linkUrl, setLinkUrl] = useState('');
+	const [savedSelection, setSavedSelection] = useState<Range | null>(null);
 
 	// Set initial content only once
 	useEffect(() => {
@@ -158,42 +159,54 @@ interface ControlPanelProps {
 			}
 		};
 
-		const handleAddLink = () => {
+	const handleInsertLink = () => {
+		if (!linkUrl.trim()) {
+			alert('Please enter a URL');
+			return;
+		}
+		
+		// Restore the saved selection
+		if (savedSelection && editorRef.current) {
 			const selection = window.getSelection();
-			if (!selection || selection.toString().trim() === '') {
-				alert('Please select some text first');
-				return;
-			}
-			setShowLinkInput(true);
-		};
-
-		const handleInsertLink = () => {
-			if (!linkUrl.trim()) {
-				alert('Please enter a URL');
-				return;
-			}
-			
-			const selection = window.getSelection();
-			if (selection && selection.toString().trim()) {
-				const selectedText = selection.toString();
-				const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">${selectedText}</a>`;
-				document.execCommand('insertHTML', false, linkHtml);
+			if (selection) {
+				selection.removeAllRanges();
+				selection.addRange(savedSelection);
 				
-				if (editorRef.current) {
-					onCaptionChange(editorRef.current.innerHTML);
+				const selectedText = selection.toString();
+				if (selectedText.trim()) {
+					const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">${selectedText}</a>`;
+					document.execCommand('insertHTML', false, linkHtml);
+					
+					if (editorRef.current) {
+						onCaptionChange(editorRef.current.innerHTML);
+					}
 				}
 			}
-			
-			setShowLinkInput(false);
-			setLinkUrl('');
-		};
+		}
+		
+		setShowLinkInput(false);
+		setLinkUrl('');
+		setSavedSelection(null);
+	};
 
-		const handleCancelLink = () => {
-			setShowLinkInput(false);
-			setLinkUrl('');
-		};
+	const handleCancelLink = () => {
+		setShowLinkInput(false);
+		setLinkUrl('');
+		setSavedSelection(null);
+	};
 
-		const handlePaste = (e: React.ClipboardEvent) => {
+	const handleEditorClick = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+		if (target.tagName === 'A') {
+			e.preventDefault();
+			const href = target.getAttribute('href');
+			if (href) {
+				window.open(href, '_blank', 'noopener,noreferrer');
+			}
+		}
+	};
+
+	const handlePaste = (e: React.ClipboardEvent) => {
 			e.preventDefault();
 			const text = e.clipboardData.getData('text/plain');
 			
@@ -239,14 +252,6 @@ interface ControlPanelProps {
 							onClick={() => formatText('italic')}
 						>
 						<i>I</i>
-					</button>
-					<button
-						type="button"
-						className="px-2 py-1 rounded border border-gray-300 text-sm bg-gray-100 hover:bg-gray-200"
-						title="Insert Link"
-						onClick={handleAddLink}
-					>
-						<Link size={16} />
 					</button>
 					{/* Emoji Picker */}
 						<div className="relative">
@@ -324,15 +329,16 @@ interface ControlPanelProps {
 							<Copy size={14} className={copySuccess ? 'text-green-600' : 'text-gray-700'} />
 							{copySuccess && <span className="ml-1 text-green-600 text-xs font-semibold">Copied!</span>}
 						</button>
-						<div
-							ref={editorRef}
-							className="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-blue-400 focus:outline-none resize-none text-gray-700 bg-white min-h-[200px] min-w-[200px] text-base"
-							contentEditable
-							suppressContentEditableWarning
-							onInput={handleInput}
-							onPaste={handlePaste}
-							style={{ whiteSpace: 'pre-wrap', position: 'relative', zIndex: 1 }}
-						/>
+					<div
+						ref={editorRef}
+						className="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-blue-400 focus:outline-none resize-none text-gray-700 bg-white min-h-[200px] min-w-[200px] text-base"
+						contentEditable
+						suppressContentEditableWarning
+						onInput={handleInput}
+						onPaste={handlePaste}
+						onClick={handleEditorClick}
+						style={{ whiteSpace: 'pre-wrap', position: 'relative', zIndex: 1 }}
+					/>
 						{/* Custom placeholder for rich text editor */}
 						{(!richCaption || richCaption === '<br>') && (
 							<div className="absolute left-0 top-0 p-4 text-gray-400 pointer-events-none select-none" style={{ zIndex: 0 }}>

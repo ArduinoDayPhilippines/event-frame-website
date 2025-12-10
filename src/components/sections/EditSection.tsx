@@ -35,10 +35,6 @@ export default function EditSection() {
   useRedirectIfNoImage(imageUrl);
   const { handleShare, showShareModal, setShowShareModal, shareUrl, loading } = useShareFrame({
     imageUrl: imageUrl as string,
-    scale,
-    rotate,
-    caption,
-    frameColor: frameColor as string,
     templateName: template,
     frameId,
     setFrameId,
