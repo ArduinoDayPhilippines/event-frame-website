@@ -22,7 +22,7 @@ export default function CarouselSection() {
 
   if (loading) {
     return (
-      <section className="bg-[#4A90E2] py-12 px-6">
+      <section className="bg-[#0a0a0a] py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Try Out More!</h2>
           <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -33,7 +33,7 @@ export default function CarouselSection() {
 
   if (frames.length === 0) {
     return (
-      <section className="bg-[#4A90E2] py-12 px-6">
+      <section className="bg-[#0a0a0a] py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Try Out More!</h2>
           <p className="text-white text-opacity-90">No frames available yet. Create your first frame to get started!</p>
@@ -43,9 +43,9 @@ export default function CarouselSection() {
   }
 
   return (
-    <section className="bg-[#4A90E2] py-10 px-6 mb-12">
+    <section className="bg-[#0a0a0a] py-10 px-6 mb-12">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-black mb-8 hover:text-[#FFD700] transition-all duration-300 cursor-default animate-pulse hover:animate-none hover:scale-110">Try Out More!</h2>
+        <h2 className="text-3xl font-bold text-white mb-8 hover:text-[#FF8552] transition-all duration-300 cursor-default animate-pulse hover:animate-none hover:scale-110">Try Out More!</h2>
         
         <Carousel
           opts={{
@@ -74,8 +74,8 @@ export default function CarouselSection() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="text-[#FFD700] border-[#FFD700] hover:bg-[#FFD700] hover:text-black" />
-          <CarouselNext className="text-[#FFD700] border-[#FFD700] hover:bg-[#FFD700] hover:text-black" />
+          <CarouselPrevious className="text-[#1ED9C3] border-[#1ED9C3] hover:bg-[#1ED9C3] hover:text-black" />
+          <CarouselNext className="text-[#1ED9C3] border-[#1ED9C3] hover:bg-[#1ED9C3] hover:text-black" />
         </Carousel>
       </div>
     </section>

@@ -17,7 +17,7 @@ export default function FeatureCard({
 }: FeatureCardProps) {
 	return (
 		<div 
-			className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 relative overflow-hidden group"
+			className="bg-[#1e2936] rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 relative overflow-hidden group"
 			style={{ borderColor }}
 		>
 			{/* Animated background gradient on hover */}
@@ -47,8 +47,8 @@ export default function FeatureCard({
 					</div>
 				</div>
 
-				<h3 className="text-2xl font-bold text-black mb-4 text-center">{title}</h3>
-				<p className="text-gray-700 leading-relaxed text-center">
+				<h3 className="text-2xl font-bold text-white mb-4 text-center">{title}</h3>
+				<p className="text-gray-300 leading-relaxed text-center">
 					{description}
 				</p>
 			</div>

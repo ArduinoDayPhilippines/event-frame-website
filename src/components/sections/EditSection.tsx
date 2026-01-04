@@ -61,7 +61,7 @@ export default function EditSection() {
         scale,
         rotate,
         caption,
-        frameColor: frameColor || '#4A90E2',
+        frameColor: frameColor || '#1ED9C3',
         templateName: templateName || 'name',
         createdAt: new Date().toISOString(),
       };
@@ -77,8 +77,8 @@ export default function EditSection() {
     }
   };
 
-  const primaryBlue = frameColor || '#4A90E2';
-  const accentGreen = '#50E3C2';
+  const primaryBlue = frameColor || '#1ED9C3'; // Arduino Day Teal
+  const accentGreen = '#FF8552'; // Arduino Day Orange
 
   const handleChangeFrame = () => {
     if (confirm('Do you want to upload a new frame? Current progress will be lost.')) {
@@ -87,7 +87,7 @@ export default function EditSection() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans relative overflow-hidden bg-gradient-to-b from-[#4A90E2] via-[#8CB8E8] to-white">
+    <div className="min-h-screen flex flex-col font-sans relative overflow-hidden bg-gradient-to-b from-[#0a0a0a] via-[#151515] to-[#1a1a1a]">
       {/* Decorative dots pattern */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
@@ -162,7 +162,7 @@ export default function EditSection() {
               <div className="w-full max-w-md flex flex-col gap-4 mb-20">
                 {/* Template by input */}
                 <div>
-                  <label htmlFor="templateBy" className="block text-sm font-medium text-gray-700 mb-1">Template by</label>
+                  <label htmlFor="templateBy" className="block text-sm font-medium text-white mb-1">Template by</label>
                   <input
                     id="templateBy"
                     name="templateBy"
@@ -175,7 +175,7 @@ export default function EditSection() {
                 </div>
                 {/* Template input (now below template by) */}
                 <div>
-                  <label htmlFor="template" className="block text-sm font-medium text-gray-700 mb-1">Template</label>
+                  <label htmlFor="template" className="block text-sm font-medium text-white mb-1">Template</label>
                   <input
                     id="template"
                     name="template"

@@ -30,7 +30,7 @@ export async function downloadFrameImage({
     const size = 1200;
     canvas.width = size;
     canvas.height = size;
-    ctx.fillStyle = frame.frameColor || '#4A90E2';
+    ctx.fillStyle = frame.frameColor || '#1ED9C3'; // Arduino Day Teal
     ctx.fillRect(0, 0, size, size);
     if (userImage) {
       const userImg = new Image();

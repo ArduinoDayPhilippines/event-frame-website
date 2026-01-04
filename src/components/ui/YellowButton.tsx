@@ -32,8 +32,8 @@ export default function YellowButton({
 			type={type}
 			onClick={onClick}
 			className={
-				`${sizeClasses[size]} ${roundedClass} font-bold bg-yellow-400 text-gray-900 ` +
-				`${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-500 cursor-pointer'} ` +
+				`${sizeClasses[size]} ${roundedClass} font-bold bg-[#FFB84D] text-gray-900 ` +
+				`${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#FF8552] cursor-pointer'} ` +
 				`transition-colors shadow-md ${className}`
 			}
 			disabled={disabled}

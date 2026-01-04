@@ -2,32 +2,29 @@ import React from 'react';
 import FeatureCard from '../../ui/FeatureCard';
 import { Wand2, Zap, Share2 } from 'lucide-react';
 
-const FeaturesSection = ({ primaryBlue = '#4A90E2', accentGreen = '#50E3C2' }) => (
+const FeaturesSection = ({ primaryBlue = '#1ED9C3', accentGreen = '#FF8552' }) => (
   <section 
     id="features" 
     className="py-16 md:py-20 scroll-mt-16 relative overflow-hidden"
     style={{
-      background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
+      background: 'linear-gradient(to bottom, #0a0a0a 0%, #151515 50%, #1a1a1a 100%)',
     }}
   >
     <div 
       className="absolute inset-0 opacity-20"
       style={{
         backgroundImage: `
-          radial-gradient(circle at 20% 30%, ${primaryBlue} 2px, transparent 2px),
-          radial-gradient(circle at 80% 20%, ${accentGreen} 1.5px, transparent 1.5px),
-          radial-gradient(circle at 30% 70%, ${accentGreen} 1px, transparent 1px),
-          radial-gradient(circle at 75% 80%, ${primaryBlue} 2.5px, transparent 2.5px),
-          radial-gradient(circle at 10% 90%, ${primaryBlue} 1.5px, transparent 1.5px),
-          radial-gradient(circle at 90% 60%, ${accentGreen} 2px, transparent 2px)
+          radial-gradient(circle at 20% 30%, ${primaryBlue} 1px, transparent 1px),
+          radial-gradient(circle at 80% 20%, ${accentGreen} 1px, transparent 1px),
+          radial-gradient(circle at 50% 60%, ${primaryBlue} 1px, transparent 1px)
         `,
-        backgroundSize: '100px 100px, 150px 150px, 120px 120px, 180px 180px, 90px 90px, 110px 110px',
-        backgroundPosition: '0 0, 40px 40px, 80px 20px, 20px 60px, 60px 80px, 30px 30px'
+        backgroundSize: '80px 80px, 100px 100px, 120px 120px',
+        backgroundPosition: '0 0, 40px 40px, 80px 20px'
       }}
     />
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-black">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">
           Why <span style={{ color: primaryBlue }}>FrameIt</span> is Your Picture <span style={{ color: accentGreen }}>Essential</span>.
         </h2>
         <div className="flex items-center justify-center gap-2 mt-6">

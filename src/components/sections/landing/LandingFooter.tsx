@@ -24,13 +24,11 @@ export default function LandingFooter() {
   return (
     <footer
       style={{
-        background: `linear-gradient(90deg, #4A90E2 0%, #50E3C2 100%)`,
-        boxShadow: '0 -8px 24px -3px rgba(0, 0, 0, 0.18), 0 -4px 12px -4px rgba(0, 0, 0, 0.12)',
-        borderTopLeftRadius: '2rem',
-        borderTopRightRadius: '2rem',
-        marginTop: '4rem',
+        background: `linear-gradient(90deg, #0a0a0a 0%, #151515 50%, #1a1a1a 100%)`,
+        boxShadow: '0 -8px 24px -3px rgba(0, 0, 0, 0.3), 0 -4px 12px -4px rgba(0, 0, 0, 0.2)',
+        marginTop: '0',
       }}
-      className="text-white pt-8 pb-3 px-2"
+      className="text-white pt-10 pb-4 px-2"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6 text-xs items-start">
@@ -41,15 +39,15 @@ export default function LandingFooter() {
             >
               <span className="inline-block bg-white/20 px-3 py-1 rounded-xl shadow-md">FrameIt</span>
             </h3>
-            <span className="text-blue-100 text-xs mt-2 italic">Create. Frame. Share.</span>
+            <span className="text-[#1ED9C3] text-xs mt-2 italic font-medium">Create. Frame. Share.</span>
           </div>
 
           <div>
             <h4 className="font-bold mb-3 text-white/90 tracking-wide">Quick Links</h4>
             <ul className="space-y-2">
-              <li><button onClick={() => router.push('/')} className="hover:text-yellow-200 transition-colors cursor-pointer font-medium">Home</button></li>
-              <li><button onClick={() => scrollToSection('about-us')} className="hover:text-yellow-200 transition-colors cursor-pointer font-medium">About</button></li>
-              <li><button onClick={() => scrollToSection('features')} className="hover:text-yellow-200 transition-colors cursor-pointer font-medium">Features</button></li>
+              <li><button onClick={() => router.push('/')} className="hover:text-[#FFB84D] transition-colors cursor-pointer font-medium">Home</button></li>
+              <li><button onClick={() => scrollToSection('about-us')} className="hover:text-[#FFB84D] transition-colors cursor-pointer font-medium">About</button></li>
+              <li><button onClick={() => scrollToSection('features')} className="hover:text-[#FFB84D] transition-colors cursor-pointer font-medium">Features</button></li>
             </ul>
           </div>
 
@@ -58,20 +56,20 @@ export default function LandingFooter() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://www.facebook.com/icpepse.pupmanila"
+                  href="https://www.facebook.com/arduinodayphilippines"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-yellow-200 transition-colors cursor-pointer font-medium"
+                  className="hover:text-[#FFB84D] transition-colors cursor-pointer font-medium"
                 >
                   Report an Issue
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/icpepse.pupmanila"
+                  href="https://www.facebook.com/arduinodayphilippines"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-yellow-200 transition-colors cursor-pointer font-medium"
+                  className="hover:text-[#FFB84D] transition-colors cursor-pointer font-medium"
                 >
                   Help Center
                 </a>
@@ -83,28 +81,28 @@ export default function LandingFooter() {
             <h4 className="font-bold mb-3 text-white/90 tracking-wide">Contact Us</h4>
             <div className="flex gap-4 items-center mt-2">
               <a
-                href="https://www.instagram.com/icpep.se_pup/"
+                href="https://www.instagram.com/arduinodayphilippines/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-yellow-200 transition-colors cursor-pointer"
+                className="hover:text-[#1ED9C3] transition-colors cursor-pointer"
                 title="Instagram"
               >
                 <Instagram size={24} />
               </a>
               <a
-                href="https://www.facebook.com/icpepse.pupmanila"
+                href="https://www.facebook.com/arduinodayphilippines"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-yellow-200 transition-colors cursor-pointer"
+                className="hover:text-[#1ED9C3] transition-colors cursor-pointer"
                 title="Facebook"
               >
                 <Facebook size={24} />
               </a>
               <a
-                href="https://www.linkedin.com/company/icpepse-pupmanila/posts/?feedView=all"
+                href="https://www.linkedin.com/company/arduinodayphilippines/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-yellow-200 transition-colors cursor-pointer"
+                className="hover:text-[#1ED9C3] transition-colors cursor-pointer"
                 title="LinkedIn"
               >
                 <Linkedin size={24} />
@@ -113,10 +111,8 @@ export default function LandingFooter() {
           </div>
         </div>
 
-        <div className="border-t border-blue-200/40 py-3 text-center text-xs text-blue-50 tracking-wide">
-          <span className="inline-block bg-white/10 px-3 py-1 rounded-lg shadow-sm">
-            © {currentYear} <span className="font-bold">ICPEP SE - PUP Manila</span>. All rights reserved. | Designed for your story.
-          </span>
+        <div className="border-t border-white/20 pt-4 mt-2 text-center text-sm text-white/80">
+          © {currentYear} <span className="font-bold">ADPH - Arduino Day Philippines</span>. All rights reserved. | Designed for your story.
         </div>
       </div>
     </footer>

@@ -16,8 +16,8 @@ export default function UploadSection() {
     const { imageFile, setImageFile, loadFrame, setCaption } = useFrame();
     const { showSuccess, handleFileDrop } = useUploadHandler(setImageFile, setCaption);
     const router = useRouter();
-    const primaryBlue = '#4A90E2';
-    const accentGreen = '#50E3C2';
+    const primaryBlue = '#1ED9C3'; // Arduino Day Teal
+    const accentGreen = '#FF8552'; // Arduino Day Orange
     const displayName = useUserDisplayName();
     const [savedFrames, setSavedFrames] = useState<Record<string, SavedFrame>>({});
     const [deleting, setDeleting] = useState<string | null>(null);
@@ -97,7 +97,7 @@ export default function UploadSection() {
     }, [showGreeting]);
 
     return (
-        <div className="min-h-screen flex flex-col font-sans relative overflow-hidden bg-gradient-to-b from-[#4A90E2] via-[#8CB8E8] to-white">
+        <div className="min-h-screen flex flex-col font-sans relative overflow-hidden bg-gradient-to-b from-[#0a0a0a] via-[#151515] to-[#1a1a1a]">
             {/* Top left greeting - beautified, now hideable and animated */}
             <div className="absolute top-16 left-8 z-30 flex items-center gap-2">
                 <button
@@ -218,14 +218,14 @@ export default function UploadSection() {
 
                 {/* Saved Frames Section */}
                 <div className="w-full max-w-4xl mx-auto mt-10">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Your Saved Frames</h2>
+                    <h2 className="text-xl font-bold text-white mb-4">Your Saved Frames</h2>
                     {loading ? (
-                        <div className="text-gray-500 text-center py-8">
+                        <div className="text-white text-center py-8">
                             <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
                             Loading frames...
                         </div>
                     ) : Object.keys(savedFrames).length === 0 ? (
-                        <div className="text-gray-500 text-center py-8">No saved frames found.</div>
+                        <div className="text-white text-center py-8">No saved frames found.</div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {Object.values(savedFrames).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(frame => (

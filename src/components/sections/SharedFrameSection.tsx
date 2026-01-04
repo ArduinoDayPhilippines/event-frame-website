@@ -100,10 +100,10 @@ export default function SharedFrameSection() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading frame...</p>
+          <p className="text-white text-lg">Loading frame...</p>
         </div>
       </div>
     );
@@ -115,7 +115,7 @@ export default function SharedFrameSection() {
   if (notFound || !frame) {
     return (
       <div className="min-h-screen flex flex-col relative overflow-hidden" style={{
-        background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
+        background: 'linear-gradient(to bottom, #0a0a0a 0%, #151515 50%, #1a1a1a 100%)',
       }}>
         {/* Decorative dots pattern */}
         <div 
@@ -135,8 +135,8 @@ export default function SharedFrameSection() {
         <main className="grow flex items-center justify-center px-6 relative z-10">
           <div className="text-center max-w-md">
             <div className="text-6xl mb-4">🖼️</div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Frame Not Found</h1>
-            <p className="text-gray-600 mb-8">
+            <h1 className="text-3xl font-bold text-white mb-4">Frame Not Found</h1>
+            <p className="text-gray-300 mb-8">
               This frame doesn&apos;t exist or has been removed.
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function SharedFrameSection() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative bg-gradient-to-b from-[#4A90E2] via-[#8CB8E8] to-white">
+    <div className="min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative bg-gradient-to-b from-[#0a0a0a] via-[#151515] to-[#1a1a1a]">
       {/* Decorative dots pattern */}
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none"
@@ -189,10 +189,10 @@ export default function SharedFrameSection() {
         <div className="max-w-7xl mx-auto w-full flex flex-col items-center justify-center">
           
           <div className="mb-8 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
               Customize this Frame
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-300">
               Upload your photo and customize the frame template
             </p>
           </div>
@@ -240,7 +240,7 @@ export default function SharedFrameSection() {
           {/* More frames from creator */}
           {creatorFrames.length > 0 && (
             <div className="mt-20 w-full">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
                 Try Out More Frames from {creatorDisplayName}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,27 +1,24 @@
 import Image from 'next/image';
 import React from 'react';
 
-const AboutSection = ({ primaryBlue = '#4A90E2', accentGreen = '#50E3C2' }) => (
+const AboutSection = ({ primaryBlue = '#1ED9C3', accentGreen = '#FF8552' }) => (
   <section 
     id="about-us" 
     className="py-16 md:py-24 overflow-hidden scroll-mt-16 relative"
     style={{
-      background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
+      background: 'linear-gradient(to bottom, #1a1a1a 0%, #151515 50%, #0a0a0a 100%)',
     }}
   >
     <div 
       className="absolute inset-0 opacity-20"
       style={{
         backgroundImage: `
-          radial-gradient(circle at 20% 30%, ${primaryBlue} 2px, transparent 2px),
-          radial-gradient(circle at 80% 20%, ${accentGreen} 1.5px, transparent 1.5px),
-          radial-gradient(circle at 30% 70%, ${accentGreen} 1px, transparent 1px),
-          radial-gradient(circle at 75% 80%, ${primaryBlue} 2.5px, transparent 2.5px),
-          radial-gradient(circle at 10% 90%, ${primaryBlue} 1.5px, transparent 1.5px),
-          radial-gradient(circle at 90% 60%, ${accentGreen} 2px, transparent 2px)
+          radial-gradient(circle at 20% 30%, ${primaryBlue} 1px, transparent 1px),
+          radial-gradient(circle at 80% 20%, ${accentGreen} 1px, transparent 1px),
+          radial-gradient(circle at 50% 60%, ${primaryBlue} 1px, transparent 1px)
         `,
-        backgroundSize: '100px 100px, 150px 150px, 120px 120px, 180px 180px, 90px 90px, 110px 110px',
-        backgroundPosition: '0 0, 40px 40px, 80px 20px, 20px 60px, 60px 80px, 30px 30px'
+        backgroundSize: '80px 80px, 100px 100px, 120px 120px',
+        backgroundPosition: '0 0, 40px 40px, 80px 20px'
       }}
     />
     <div className="max-w-5xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-x-12 relative z-10">
@@ -29,7 +26,7 @@ const AboutSection = ({ primaryBlue = '#4A90E2', accentGreen = '#50E3C2' }) => (
         <div 
           style={{ 
             transform: 'translate(0px, 0px)',
-            boxShadow: `0 15px 50px rgba(74, 144, 226, 0.5), 0 0 30px rgba(74, 144, 226, 0.3)`,
+            boxShadow: `0 15px 50px rgba(30, 217, 195, 0.4), 0 0 30px rgba(30, 217, 195, 0.3)`,
             animation: 'float 6s ease-in-out infinite 1s'
           }}
           className="absolute w-80 h-80 overflow-hidden"
@@ -64,8 +61,8 @@ const AboutSection = ({ primaryBlue = '#4A90E2', accentGreen = '#50E3C2' }) => (
       </div>
       <div className="text-center md:text-left md:max-w-md shrink-0"> 
         <h2 
-          className="text-3xl sm:text-4xl font-extrabold text-gray-900 italic leading-tight mb-4" 
-          style={{ textShadow: '4px 4px 8px rgba(0,0,0,0.4)' }} 
+          className="text-3xl sm:text-4xl font-extrabold text-white italic leading-tight mb-4" 
+          style={{ textShadow: '4px 4px 8px rgba(0,0,0,0.6)' }} 
         >
           Turn 
           <span style={{ color: primaryBlue }} className="font-extrabold"> moments</span> into 
@@ -74,7 +71,7 @@ const AboutSection = ({ primaryBlue = '#4A90E2', accentGreen = '#50E3C2' }) => (
           <br />
           just one frame.
         </h2>
-        <p className="text-gray-700 text-lg leading-relaxed">
+        <p className="text-gray-300 text-lg leading-relaxed">
           FrameIt transforms your everyday photos into stunning visual stories. 
           Choose a frame, customize it your way, and share your creativity with the world.
         </p>

@@ -62,7 +62,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#4A90E2] via-[#8CB8E8] to-white px-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#0a0a0a] via-[#151515] to-[#1a1a1a] px-4">
       <div className="flex-1 flex justify-center items-center py-12">
         <div className="bg-white/90 rounded-3xl shadow-2xl px-10 py-12 w-full max-w-md border-0 backdrop-blur-md">
           <h1 className="text-4xl font-extrabold mb-8 text-center text-black tracking-tight">

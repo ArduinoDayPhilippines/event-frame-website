@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
-  const headerBgColor = '#4A90E2';
+  const headerBgColor = '#0a0a0a'; // Arduino Day dark theme
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -48,24 +48,24 @@ export default function Navbar() {
   return (
     <header
       style={{
-        backgroundColor: scrolled ? '#fff' : headerBgColor,
-        color: scrolled ? '#222' : '#fff',
-        boxShadow: scrolled ? '0 2px 12px rgba(0,0,0,0.10)' : '0 4px 16px rgba(0, 0, 0, 0.18)',
+        backgroundColor: scrolled ? '#151515' : headerBgColor,
+        color: '#fff',
+        boxShadow: scrolled ? '0 2px 12px rgba(0,0,0,0.3)' : '0 4px 16px rgba(0, 0, 0, 0.3)',
         transition: 'background 0.3s, color 0.3s, box-shadow 0.3s',
         position: 'sticky',
         top: 0,
         zIndex: 50
       }}
-      className={`w-full ${scrolled ? 'text-black' : 'text-white'}`}
+      className="w-full text-white"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div
-          className={`text-xl font-bold cursor-pointer hover:opacity-80 transition-opacity ${scrolled ? 'text-black' : 'text-white'} flex items-center gap-2`}
+          className="text-xl font-bold cursor-pointer hover:opacity-80 transition-opacity text-white flex items-center gap-2"
           onClick={handleHomeClick}
         >
           <Image 
-            src="/favicon.ico" 
-            alt="FrameIt Logo" 
+            src="/logo1.png" 
+            alt="ADPH Logo" 
             width={35} 
             height={35}
             className="object-contain"
@@ -74,9 +74,9 @@ export default function Navbar() {
         </div>
 
         <nav className="flex space-x-6 items-center">
-          <button onClick={handleAboutClick} className={`transition-colors text-base font-medium cursor-pointer ${scrolled ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-200'}`}>About Us</button>
-          <button onClick={handleFeaturesClick} className={`transition-colors text-base font-medium cursor-pointer ${scrolled ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-200'}`}>Features</button>
-          <button onClick={handleHomeClick} className={`transition-colors text-base font-medium cursor-pointer ${scrolled ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-200'}`}>Home</button>
+          <button onClick={handleAboutClick} className="transition-colors text-base font-medium cursor-pointer text-white hover:text-[#1ED9C3]">About Us</button>
+          <button onClick={handleFeaturesClick} className="transition-colors text-base font-medium cursor-pointer text-white hover:text-[#1ED9C3]">Features</button>
+          <button onClick={handleHomeClick} className="transition-colors text-base font-medium cursor-pointer text-white hover:text-[#1ED9C3]">Home</button>
         </nav>
       </div>
     </header>

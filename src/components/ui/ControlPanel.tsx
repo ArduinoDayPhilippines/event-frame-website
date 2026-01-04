@@ -227,7 +227,7 @@ interface ControlPanelProps {
 
 		return (
 			<div>
-				<h2 className="text-2xl font-bold mb-4 text-gray-800">Caption Writer</h2>
+				<h2 className="text-2xl font-bold mb-4 text-white">Caption Writer</h2>
 				<div 
 					className="bg-white/80 rounded-3xl shadow-xl px-6 py-3 w-full min-h-[80px] min-w-[300px] border border-[#e0e7ef] backdrop-blur-md flex flex-col gap-6"
 					style={{

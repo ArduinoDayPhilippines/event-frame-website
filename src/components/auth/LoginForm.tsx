@@ -68,7 +68,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#4A90E2] via-[#8CB8E8] to-white px-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#0a0a0a] via-[#151515] to-[#1a1a1a] px-4">
       <div className="flex-1 flex justify-center items-center py-12">
         <div className="bg-white/90 rounded-3xl shadow-2xl px-10 py-12 w-full max-w-md border-0 backdrop-blur-md">
           <h1 className="text-4xl font-extrabold mb-8 text-center text-black tracking-tight">
@@ -84,7 +84,7 @@ export default function LoginPage() {
                   setResetEmailSent(false);
                   setForgotPasswordMode(false);
                 }}
-                className="text-[#4A90E2] hover:underline text-sm"
+                className="text-[#1ED9C3] hover:underline text-sm"
               >
                 Back to Sign in
               </button>
@@ -149,14 +149,14 @@ export default function LoginPage() {
             {error && (
               <div className="text-red-600 text-sm text-center font-medium">{error}</div>
             )}
-            <YellowButton type="submit" className="w-full py-3 text-lg rounded-xl shadow-md hover:shadow-lg transition-all bg-[#FFD700] text-[#10151c]" disabled={loading}>
+            <YellowButton type="submit" className="w-full py-3 text-lg rounded-xl shadow-md hover:shadow-lg transition-all" disabled={loading}>
               {loading ? (forgotPasswordMode ? 'Sending...' : 'Signing in...') : (forgotPasswordMode ? 'Send Reset Link' : 'Sign in')}
             </YellowButton>
             {forgotPasswordMode && (
               <button
                 type="button"
                 onClick={() => setForgotPasswordMode(false)}
-                className="w-full text-center text-sm text-gray-600 hover:text-[#4A90E2] transition-colors"
+                className="w-full text-center text-sm text-gray-400 hover:text-[#1ED9C3] transition-colors"
               >
                 Back to Sign in
               </button>
