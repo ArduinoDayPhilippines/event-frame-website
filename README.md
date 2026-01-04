@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🖼️ FrameIt
 
-First, run the development server:
+### Arduino Day Philippines Official Frame Creator
 
+[![Next.js](https://img.shields.io/badge/Next.js-16.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+
+**Create. Frame. Share.**
+
+*A modern web application for creating and sharing customized photo frames for Arduino Day Philippines events.*
+
+[🚀 Demo](#) · [📖 Documentation](#) · [🐛 Report Bug](#) · [✨ Request Feature](#)
+
+---
+
+</div>
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎨 Creation Tools
+- **Custom Frame Templates** - Beautiful, ready-made frames
+- **Drag & Drop Interface** - Intuitive image positioning
+- **Scale & Rotate** - Perfect photo adjustments
+- **Rich Text Captions** - Bold, italic, emoji & link support
+
+</td>
+<td width="50%">
+
+### 🚀 Sharing & Storage
+- **Shareable Links** - One-click frame sharing
+- **Cloud Storage** - Save & manage your creations
+- **Download Options** - High-quality exports
+- **User Dashboard** - Track all your frames
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🎯 User Experience
+- **Responsive Design** - Mobile & desktop optimized
+- **Dark Theme** - Modern sleek aesthetic
+- **Fast Performance** - Next.js powered speed
+- **Smooth Animations** - GSAP enhanced transitions
+
+</td>
+<td width="50%">
+
+### 🔐 Security & Auth
+- **Secure Authentication** - Supabase powered
+- **Row Level Security** - Data protection
+- **Session Management** - Persistent login
+- **Password Recovery** - Easy account access
+
+</td>
+</tr>
+</table>
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm, yarn, pnpm, or bun package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd event-frame-website
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Set up environment variables:
+Create a `.env.local` file in the root directory:
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎯 Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Sign In** - Create an account or log in
+2. **Upload Photo** - Drag and drop or browse for your image
+3. **Choose Frame** - Browse and select from available frame templates
+4. **Customize** - Scale, rotate, and position your photo
+5. **Add Caption** - Write a caption with rich text formatting
+6. **Share or Download** - Generate a shareable link or download your creation
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+- **Next.js 16** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS 4** - Utility-first styling
+- **Lucide React** - Icon library
+- **html2canvas** - Image capture for downloads
+- **GSAP** - Smooth animations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend & Database
+- **Supabase** - Authentication, database, and storage
+- **PostgreSQL** - Relational database
+- **Row Level Security** - Secure data access
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Development Tools
+- **ESLint** - Code linting
+- **PostCSS** - CSS processing
+- **TypeScript 5** - Static type checking
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+event-frame-website/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── [frameId]/      # Dynamic frame view page
+│   │   ├── api/            # API routes (auth, user data)
+│   │   ├── edit/           # Frame editing page
+│   │   ├── login/          # Authentication page
+│   │   ├── upload/         # Upload & manage frames
+│   │   └── page.tsx        # Landing page
+│   ├── components/         # React components
+│   │   ├── auth/          # Authentication forms
+│   │   ├── modals/        # Modal components
+│   │   ├── sections/      # Page sections
+│   │   └── ui/            # Reusable UI components
+│   ├── contexts/          # React Context providers
+│   ├── hooks/             # Custom React hooks
+│   └── lib/               # Utility functions
+├── public/                # Static assets
+└── README.md             # Documentation
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📧 Support
+
+For questions or support, please contact:
+- Facebook: [Arduino Day Philippines](https://www.facebook.com/arduinodayphilippines)
+- Instagram: [@arduinodayphilippines](https://www.instagram.com/arduinodayphilippines/)
+- LinkedIn: [Arduino Day Philippines](https://www.linkedin.com/company/arduinodayphilippines/)
+
+---
+
+© 2026 ADPH - Arduino Day Philippines. All rights reserved. | Designed for your story.
+
