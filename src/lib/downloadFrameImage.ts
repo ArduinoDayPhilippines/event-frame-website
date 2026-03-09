@@ -26,9 +26,11 @@ export async function downloadFrameImage({
   try {
     const previewElement = document.getElementById('frame-preview');
     const previewSize = previewElement?.clientWidth || 620;
-    const previewUserImage = previewElement?.querySelector(
-      'img[alt="User uploaded"]'
-    ) as HTMLImageElement | null;
+    
+    // Find the wrapper div that contains the user image (using data attribute for reliability)
+    const previewImageWrapper = previewElement?.querySelector(
+      '[data-image-wrapper="true"]'
+    ) as HTMLElement | null;
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -50,16 +52,13 @@ export async function downloadFrameImage({
       ctx.save();
       const scaleFactor = size / previewSize;
 
-      const renderedWidth = previewUserImage?.clientWidth || previewSize;
-      const renderedHeight = previewUserImage?.clientHeight || previewSize;
-      const renderedLeft =
-        previewUserImage?.offsetLeft !== undefined
-          ? previewUserImage.offsetLeft
-          : userImgPos.x;
-      const renderedTop =
-        previewUserImage?.offsetTop !== undefined
-          ? previewUserImage.offsetTop
-          : userImgPos.y;
+      // Use wrapper div dimensions (they're set explicitly in the style)
+      const renderedWidth = previewImageWrapper?.clientWidth || previewSize;
+      const renderedHeight = previewImageWrapper?.clientHeight || previewSize;
+      
+      // Get position from userImgPos prop, not from DOM
+      const renderedLeft = userImgPos.x;
+      const renderedTop = userImgPos.y;
 
       const drawWidth = renderedWidth * scaleFactor;
       const drawHeight = renderedHeight * scaleFactor;
